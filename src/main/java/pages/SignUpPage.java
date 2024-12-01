@@ -35,17 +35,11 @@ public class SignUpPage extends BasePage {
     WebElement btnAlreadyRegistered;
 
     public void inputUserData(ArrayList<String> userData) {
-        for (WebElement input : inputElements) {
-            System.out.println("Input name: " + input.getAttribute("ng-reflect-name") + " "
-                    + input.getAttribute("type"));
-        }
         Iterator<WebElement> inputIterator = inputElements.iterator();
         Iterator<String> dataIterator = userData.iterator();
         while (inputIterator.hasNext() && dataIterator.hasNext()) {
             WebElement input = inputIterator.next();
             String fieldDataUser = dataIterator.next();
-            System.out.println(input.getAttribute("id"));
-            System.out.println(fieldDataUser);
             input.sendKeys(fieldDataUser);
         }
     }
