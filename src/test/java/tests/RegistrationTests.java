@@ -25,7 +25,8 @@ public class RegistrationTests extends ApplManager {
     void registrationPositiveTest(){
 
         new HomePage(getDriver()).clickBtnSignUl();
-        new SignUpPage(getDriver()).inputUserData(user.getUserData());
+ //       new SignUpPage(getDriver()).inputUserData(user.getUserData());
+        new SignUpPage((getDriver())).setCheckBoxTermsOfUse();
         BasePage.pause(10);
  //       new SignUpPage(getDriver()).userRegistration(user);
     }

@@ -47,9 +47,9 @@ public class SignUpPage extends BasePage {
     public void setCheckBoxTermsOfUse() {
         labelCheckBox.click();
         WebElement inputCheckbox = inputElements.get(inputElements.size() - 1);
-        pause(1);
+ //       pause(1);
         String currentClass = inputCheckbox.getAttribute("class");
-        System.out.println("inputCheckbox class="+currentClass);
+ //       System.out.println("inputCheckbox class="+currentClass);
         if( !currentClass.contains("ng-valid") && currentClass.contains("ng-invalid") ) {
             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", inputCheckbox);
             System.out.println("label check box not took on");
