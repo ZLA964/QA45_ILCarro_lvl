@@ -6,9 +6,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 
-public class HomePage extends BasePage{
+public class SearchPage extends BasePage{
 
-    public HomePage(WebDriver webDrv){
+    public SearchPage(WebDriver webDrv){
         setDriver(webDrv);
         driver.get("https://ilcarro.web.app/search");
         PageFactory.initElements(

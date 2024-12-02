@@ -1,43 +1,32 @@
 package tests;
 
-import dto.UserDto;
+
+import dto.UserDtoLombok;
 import manager.ApplManager;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.BasePage;
-import pages.HomePage;
-import pages.RegistrationOkeyPage;
-import pages.SignUpPage;
+import pages.*;
 
 import java.util.Random;
 
 public class RegistrationTests extends ApplManager {
-    UserDto user;
-
-    @BeforeMethod
-    void setUpUser(){
-        int randomNum = new Random().nextInt(1000);
-        int i = new Random().nextInt(1000);
-        user = new UserDto("User", "Lastuser",
-                "user"+i+"@mail.com", "Pass-"+i+"-word!");
-    }
+    RegistrationPage registrationPage;
 
     @Test
     void registrationPositiveTest(){
-
-        new HomePage(getDriver()).clickBtnSignUl();
-//        new SignUpPage(getDriver()).inputUserData(user.getUserData());
-//        new SignUpPage((getDriver())).setCheckBoxTermsOfUse();
-//        new SignUpPage(getDriver()).submitRegistration();
-//        BasePage.pause(2);
-//        System.out.println("user is registered:");
-
-        System.out.println("{\"email\": \"" + user.getEmail() + "\", \"password\": \"" + user.getPassword() + "\"}");
-//      json can write to file for next delete users.
-
-       new SignUpPage(getDriver()).userRegistration(user);
-       Assert.assertTrue(new RegistrationOkeyPage(getDriver()).isRegistrationOkey());
-
+        int i  = new Random().nextInt(1000)+1000;
+        UserDtoLombok user = UserDtoLombok.builder()
+                .name("Bob")
+                .lastName("Doe")
+                .email(i+"bob_doe@mail.com")
+                .password("Pass123!")
+                .build();
+        System.out.println(user);
+        new SearchPage(getDriver()).clickBtnSignUl();
+        registrationPage =new RegistrationPage(getDriver());
+        registrationPage.typeRegistrationForm(user);
+        registrationPage.clickCheckBox();
+        registrationPage.clickBtnYalla();
+        Assert.assertTrue(registrationPage.isPopUpMessagePresent());
     }
 }
