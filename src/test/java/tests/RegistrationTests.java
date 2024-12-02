@@ -30,9 +30,12 @@ public class RegistrationTests extends ApplManager {
         new HomePage(getDriver()).clickBtnSignUl();
 //        new SignUpPage(getDriver()).inputUserData(user.getUserData());
 //        new SignUpPage((getDriver())).setCheckBoxTermsOfUse();
-//        new SignUpPage(getDriver()).submitRegustration();
+//        new SignUpPage(getDriver()).submitRegistration();
 //        BasePage.pause(2);
-        new SignUpPage(getDriver()).userRegistration(user);
-        Assert.assertTrue(new RegistrationOkeyPage(getDriver()).isRegistrationOkey());
+       new SignUpPage(getDriver()).userRegistration(user);
+       Assert.assertTrue(new RegistrationOkeyPage(getDriver()).isRegistrationOkey());
+       System.out.println("user is registered:");
+       System.out.println("{\"email\": \"" + user.getEmail() + "\", \"password\": \"" + user.getPassword() + "\"}");
+// json can write to file for next delete users.
     }
 }

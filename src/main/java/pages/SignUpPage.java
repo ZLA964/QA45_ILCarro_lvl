@@ -18,7 +18,6 @@ public class SignUpPage extends BasePage {
 
     public SignUpPage(WebDriver webDrv) {
         setDriver(webDrv);
-
         PageFactory.initElements(
                 new AjaxElementLocatorFactory(driver, 10), this);
     }
@@ -58,24 +57,22 @@ public class SignUpPage extends BasePage {
         }
     }
 
-    public void submitRegustration() throws NoSuchElementException {
+    public void submitRegistration() throws NoSuchElementException {
         if (btnSubmit.isEnabled()) {
             btnSubmit.click();
         } else {
             String message = "\n ===== problem =====\n" +
                     "user data are not correct or is not set term of use check box" +
                     "\n ======  ======\n";
-            //           System.out.println(message);
             throw new NoSuchElementException(message);
         }
-
     }
 
     public void userRegistration(UserDto user) {
         inputUserData(user.getUserData());
         setCheckBoxTermsOfUse();
         try {
-            submitRegustration();
+            submitRegistration();
         } catch (NoSuchElementException e) {
             System.out.println(e.getMessage());
         }
