@@ -1,11 +1,14 @@
 package tests;
 
+import com.sun.source.tree.AssertTree;
 import dto.UserDto;
 import manager.ApplManager;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.BasePage;
 import pages.HomePage;
+import pages.RegistrationOkeyPage;
 import pages.SignUpPage;
 
 import java.util.Random;
@@ -25,9 +28,11 @@ public class RegistrationTests extends ApplManager {
     void registrationPositiveTest(){
 
         new HomePage(getDriver()).clickBtnSignUl();
- //       new SignUpPage(getDriver()).inputUserData(user.getUserData());
-        new SignUpPage((getDriver())).setCheckBoxTermsOfUse();
-        BasePage.pause(10);
- //       new SignUpPage(getDriver()).userRegistration(user);
+//        new SignUpPage(getDriver()).inputUserData(user.getUserData());
+//        new SignUpPage((getDriver())).setCheckBoxTermsOfUse();
+//        new SignUpPage(getDriver()).submitRegustration();
+//        BasePage.pause(2);
+        new SignUpPage(getDriver()).userRegistration(user);
+        Assert.assertTrue(new RegistrationOkeyPage(getDriver()).isRegistrationOkey());
     }
 }

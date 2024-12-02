@@ -11,6 +11,7 @@ import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class SignUpPage extends BasePage {
 
@@ -34,6 +35,9 @@ public class SignUpPage extends BasePage {
     @FindBy(xpath = "//span[text()='Click here']")
     WebElement btnAlreadyRegistered;
 
+    @FindBy(xpath = "//button[text()='Ok']")
+    WebElement btnRegistrationOkey;
+
     public void inputUserData(ArrayList<String> userData) {
         Iterator<WebElement> inputIterator = inputElements.iterator();
         Iterator<String> dataIterator = userData.iterator();
@@ -47,23 +51,34 @@ public class SignUpPage extends BasePage {
     public void setCheckBoxTermsOfUse() {
         labelCheckBox.click();
         WebElement inputCheckbox = inputElements.get(inputElements.size() - 1);
- //       pause(1);
         String currentClass = inputCheckbox.getAttribute("class");
- //       System.out.println("inputCheckbox class="+currentClass);
-        if( !currentClass.contains("ng-valid") && currentClass.contains("ng-invalid") ) {
+        if (!currentClass.contains("ng-valid") && currentClass.contains("ng-invalid")) {
             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", inputCheckbox);
             System.out.println("label check box not took on");
         }
     }
 
-    public void submitRegustration(){
-        btnSubmit.click();
+    public void submitRegustration() throws NoSuchElementException {
+        if (btnSubmit.isEnabled()) {
+            btnSubmit.click();
+        } else {
+            String message = "\n ===== problem =====\n" +
+                    "user data are not correct or is not set term of use check box" +
+                    "\n ======  ======\n";
+            //           System.out.println(message);
+            throw new NoSuchElementException(message);
+        }
+
     }
 
-    public void userRegistration(UserDto user){
+    public void userRegistration(UserDto user) {
         inputUserData(user.getUserData());
         setCheckBoxTermsOfUse();
-        submitRegustration();
+        try {
+            submitRegustration();
+        } catch (NoSuchElementException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 
