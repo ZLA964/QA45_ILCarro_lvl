@@ -1,6 +1,5 @@
 package tests;
 
-import com.sun.source.tree.AssertTree;
 import dto.UserDto;
 import manager.ApplManager;
 import org.testng.Assert;
@@ -32,10 +31,13 @@ public class RegistrationTests extends ApplManager {
 //        new SignUpPage((getDriver())).setCheckBoxTermsOfUse();
 //        new SignUpPage(getDriver()).submitRegistration();
 //        BasePage.pause(2);
+//        System.out.println("user is registered:");
+
+        System.out.println("{\"email\": \"" + user.getEmail() + "\", \"password\": \"" + user.getPassword() + "\"}");
+//      json can write to file for next delete users.
+
        new SignUpPage(getDriver()).userRegistration(user);
        Assert.assertTrue(new RegistrationOkeyPage(getDriver()).isRegistrationOkey());
-       System.out.println("user is registered:");
-       System.out.println("{\"email\": \"" + user.getEmail() + "\", \"password\": \"" + user.getPassword() + "\"}");
-// json can write to file for next delete users.
+
     }
 }

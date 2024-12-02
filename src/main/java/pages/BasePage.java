@@ -17,11 +17,11 @@ public class BasePage {
         }
     }
 
-    //    public void pause(int timeInSeconds) {
+//    public void pause(int timeInSeconds) {
 //        try {
 //            Thread.sleep(timeInSeconds * 1000L);
 //        } catch (InterruptedException e) {
-//            Thread.currentThread().interrupt(); // Восстановление флага прерывания
+//            Thread.currentThread().interrupt(); // Restoring the interrupt flag
 //        }
 //    }
 
