@@ -1,4 +1,4 @@
-package manager;
+package ilcarro_zlv.manager;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -18,14 +18,14 @@ public class ApplManager {
     public void setUp() {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
-        // set option for driver wait for full load of page
+//        driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+//                        set option for driver wait for full load of page
     }
 
     @AfterMethod
     public void tearDown() {
         try {
-            Thread.sleep(3000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

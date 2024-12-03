@@ -1,6 +1,6 @@
-package pages;
+package ilcarro_zlv.pages;
 
-import dto.UserDto;
+import ilcarro_zlv.dto.UserDto;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,13 +8,13 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 public class SignUpPage extends BasePage {
-
 
     public SignUpPage(WebDriver webDrv) {
         setDriver(webDrv);

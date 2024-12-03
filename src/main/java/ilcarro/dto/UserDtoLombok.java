@@ -1,4 +1,4 @@
-package dto;
+package ilcarro.dto;
 
 import lombok.Builder;
 import lombok.Getter;

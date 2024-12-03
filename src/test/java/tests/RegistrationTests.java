@@ -1,11 +1,12 @@
 package tests;
 
 
-import dto.UserDtoLombok;
-import manager.ApplManager;
+import ilcarro.dto.UserDtoLombok;
+import ilcarro.manager.ApplManager;
+import ilcarro.pages.RegistrationPage;
+import ilcarro.pages.SearchPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.*;
 
 import java.util.Random;
 
