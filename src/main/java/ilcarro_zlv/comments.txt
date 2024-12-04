@@ -1,0 +1,21 @@
+LoginZlvTests
+
+//    private void setUser(String email, String password) {
+//        user = LoginUser.builder()
+//                .email(email)
+//                .password(password)
+//                .build();
+//    }
+
+// Logged in success
+
+
+ApplManager
+
+//        try {
+//            Thread.sleep(100);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+//      the delay between tests is unnecessary
+

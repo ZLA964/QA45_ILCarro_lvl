@@ -1,18 +1,15 @@
 package ilcarro_zlv.manager;
 
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
-import java.util.concurrent.TimeUnit;
 
+@Getter
 public class ApplManager {
     private WebDriver driver;
-
-    public WebDriver getDriver() {
-        return driver;
-    }
 
     @BeforeMethod
     public void setUp() {
@@ -24,12 +21,7 @@ public class ApplManager {
 
     @AfterMethod
     public void tearDown() {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        if (driver != null) {
+       if (driver != null) {
             driver.quit();
         }
     }

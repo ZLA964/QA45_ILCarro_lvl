@@ -1,5 +1,6 @@
 package ilcarro_zlv.pages;
 
+import lombok.Setter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,11 +9,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 public class BasePage {
+    @Setter
     static WebDriver driver;
-
-    public static void setDriver(WebDriver wD) {
-        driver = wD;
-    }
 
 
     public void pause(int timeInSeconds) {
@@ -38,19 +36,8 @@ public class BasePage {
     public boolean isTextInElementPresent(WebElement element, String text) {
         return element.getText().contains(text);
     }
+
 }
 
 
-//import org.openqa.selenium.WebElement;
 
-//    public static void pause(int time) {
-//        try {
-//            Thread.sleep(time*1000L);
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-
-//    public boolean isTextInElementPresent(WebElement element, String text){
-//        return element.getText().contains(text);
-//    }

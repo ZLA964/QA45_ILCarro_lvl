@@ -6,15 +6,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
-
 import java.util.NoSuchElementException;
-
 
 public class LoginPage extends BasePage{
 
     public LoginPage(WebDriver webDrv){
         setDriver(webDrv);
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver,1), this);
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver,3), this);
     }
 
     @FindBy(id = "email")
@@ -43,6 +41,10 @@ public class LoginPage extends BasePage{
         }
     }
 
+    public boolean isBtnYallaDisable(){
+        return !btnYalla.isEnabled();
+    }
+
     public void logIn(LoginUser user){
         typeLoginForm(user);
         clickBtnYalla();
@@ -55,22 +57,29 @@ public class LoginPage extends BasePage{
     WebElement massageOnPopUp;
 
     @FindBy(xpath = "//mat-dialog-container//h1[@class='title']")
-    WebElement titlePopUp;
+    WebElement titlePopUp;                                                  //  h1   2 time!       'Login failed'
 
+    @FindBy(xpath = "//mat-dialog-container//button")
+    WebElement btnPopUp;
+
+    public void clickButtonPopUp(){ btnPopUp.click(); }
 
     public boolean isLoginSuccess(){
-        waitForPopup(popUpBox, 7);
-        waitForPopup(massageOnPopUp,2);
+        waitForPopup(popUpBox, 2);
+        waitForPopup(massageOnPopUp,1);
         return isTextInElementPresent(massageOnPopUp, "Logged in success");
     }
-    //  'Logged in success'
-    //  "Login or Password incorrect"
-    // h1 'Login failed'
 
     public  boolean isLoginIncorrect(){
-        waitForPopup(popUpBox,7);
-        waitForPopup(titlePopUp,7);
- //       System.out.println(titlePopUp.getText());
+        waitForPopup("//mat-dialog-container",5);
+        waitForPopup(titlePopUp,1);
         return isTextInElementPresent(titlePopUp, "Login failed");
     }
+
+
+
+
+
+
+
 }
