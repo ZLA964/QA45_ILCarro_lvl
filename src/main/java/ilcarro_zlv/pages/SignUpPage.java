@@ -8,7 +8,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -23,7 +22,7 @@ public class SignUpPage extends BasePage {
     }
 
     @FindBy(xpath = "//form//input")
-    private List<WebElement> inputElements; // use ArrayList
+    private List<WebElement> inputElements;
 
     @FindBy(xpath = "//label[@for='terms-of-use']")
     private WebElement labelCheckBox;

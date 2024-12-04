@@ -4,7 +4,7 @@ import ilcarro_zlv.dto.UserDto;
 import ilcarro_zlv.pages.HomePage;
 import ilcarro_zlv.pages.RegistrationOkeyPage;
 import ilcarro_zlv.pages.SignUpPage;
-import ilcarro.manager.ApplManager;
+import ilcarro_zlv.manager.ApplManager;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
