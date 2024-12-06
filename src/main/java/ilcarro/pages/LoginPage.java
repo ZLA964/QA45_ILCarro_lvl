@@ -22,8 +22,31 @@ public class LoginPage extends BasePage {
     @FindBy(id = "password")
     WebElement inputPassword;
 
+    @FindBy(xpath = "//button[@type='submit']")
+    WebElement btnYalla;
+
+    @FindBy(xpath = "//h2[@class='message']")
+    WebElement popUpMessage;
+
+    @FindBy(xpath = "//div[@class='error']")
+    WebElement errorMessage;
+
     public void typeLoginForm(UserDtoLombok user) {
         inputEmail.sendKeys(user.getEmail());
         inputPassword.sendKeys(user.getPassword());
     }
+
+    public void clickBtnYalla() {
+        btnYalla.click();
+    }
+
+    public boolean isPopUpLoginMessagePresent(String text){
+        return isTextInElementPresent(popUpMessage, text);
+    }
+
+    public boolean validateErrorMessage(String text){
+        return isTextInElementPresent(errorMessage, text);
+    }
+
+
 }
