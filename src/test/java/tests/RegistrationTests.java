@@ -2,7 +2,7 @@ package tests;
 
 
 import ilcarro.dto.UserDtoLombok;
-import ilcarro.manager.ApplManager;
+import ilcarro.manager.ApplicationManager;
 import ilcarro.pages.RegistrationPage;
 import ilcarro.pages.SearchPage;
 import org.testng.Assert;
@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 
 import java.util.Random;
 
-public class RegistrationTests extends ApplManager {
+public class RegistrationTests extends ApplicationManager {
     RegistrationPage registrationPage;
 
     @Test

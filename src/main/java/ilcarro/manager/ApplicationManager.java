@@ -7,7 +7,7 @@ import org.testng.annotations.BeforeMethod;
 
 import java.util.concurrent.TimeUnit;
 
-public class ApplManager {
+public class ApplicationManager {
     private WebDriver driver;
 
     public WebDriver getDriver() {
@@ -25,7 +25,7 @@ public class ApplManager {
     @AfterMethod
     public void tearDown() {
         if (driver != null) {
-            driver.quit();
+//            driver.quit();
         }
     }
 

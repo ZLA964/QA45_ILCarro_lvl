@@ -37,7 +37,7 @@ public class LoginZlvTests extends ApplManager {
 
     @Test
     void loginNegativeWrongPasswordTest() {
-        user.setPassword("Pas-937-word!");  //
+        user.setPassword("Pas-937-word!");
         System.out.println(user);
         loginPage.logIn(user);
         Assert.assertTrue(loginPage.isLoginIncorrect());
@@ -45,7 +45,7 @@ public class LoginZlvTests extends ApplManager {
 
     @Test
     void loginNegativeWrongEmailTest() {
-        user.setEmail("user037@mail.com");
+        user.setEmail("user037mail.com");
         System.out.println(user);
         loginPage.logIn(user);
         Assert.assertTrue(loginPage.isLoginIncorrect());

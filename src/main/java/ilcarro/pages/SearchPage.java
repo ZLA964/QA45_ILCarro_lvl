@@ -23,6 +23,7 @@ public class SearchPage extends BasePage{
 
     @FindBy(xpath ="//a[text()=' Log in ']" )
     WebElement btnLogIn;
+
     public void clickBtnLogIn(){
         btnLogIn.click();
     }
