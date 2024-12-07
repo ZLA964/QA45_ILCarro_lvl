@@ -6,13 +6,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+
 import java.util.NoSuchElementException;
 
-public class LoginPage extends BasePage{
+public class LoginPage extends BasePage {
 
-    public LoginPage(WebDriver webDrv){
+    public LoginPage(WebDriver webDrv) {
         setDriver(webDrv);
-        PageFactory.initElements(new AjaxElementLocatorFactory(driver,3), this);
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 3), this);
     }
 
     @FindBy(id = "email")
@@ -27,13 +28,29 @@ public class LoginPage extends BasePage{
     @FindBy(xpath = "//span[@class='navigator']")
     WebElement btnNotRegistered;
 
-    public void typeLoginForm(LoginUser user){
+    @FindBy(xpath = "//div[@class='login-registration-card']//h1")
+    WebElement titleOfPage;
+
+    @FindBy(xpath = "//span[@class='navigator']")
+    WebElement linkIfNotRegistered;
+
+    public void clickOnLinkIfNotRegistered() {
+        //       pause(1);
+        linkIfNotRegistered.click();
+    }
+
+    public boolean isLoginPage() {
+        return "title".equals(titleOfPage.getAttribute("class"))
+                && "Log in".equals(titleOfPage.getText());
+    }
+
+    public void typeLoginForm(LoginUser user) {
         inputEmail.sendKeys(user.getEmail());
         inputPassword.sendKeys(user.getPassword());
     }
 
     public void clickBtnYalla() {
-        if(btnYalla.isEnabled()) {
+        if (btnYalla.isEnabled()) {
             btnYalla.click();
         } else {
             throw new NoSuchElementException("Сan't press the button Y'alla! " +
@@ -41,11 +58,11 @@ public class LoginPage extends BasePage{
         }
     }
 
-    public boolean isBtnYallaDisable(){
+    public boolean isBtnYallaDisable() {
         return !btnYalla.isEnabled();
     }
 
-    public void logIn(LoginUser user){
+    public void logIn(LoginUser user) {
         typeLoginForm(user);
         clickBtnYalla();
     }
@@ -62,24 +79,21 @@ public class LoginPage extends BasePage{
     @FindBy(xpath = "//mat-dialog-container//button")
     WebElement btnPopUp;
 
-    public void clickButtonPopUp(){ btnPopUp.click(); }
+    public void clickButtonPopUp() {
+        btnPopUp.click();
+    }
 
-    public boolean isLoginSuccess(){
+    public boolean isLoginSuccess() {
         waitForPopup(popUpBox, 2);
-        waitForPopup(massageOnPopUp,1);
+        waitForPopup(massageOnPopUp, 1);
         return isTextInElementPresent(massageOnPopUp, "Logged in success");
     }
 
-    public  boolean isLoginIncorrect(){
-        waitForPopup("//mat-dialog-container",5);
-        waitForPopup(titlePopUp,1);
+    public boolean isLoginIncorrect() {
+        waitForPopup("//mat-dialog-container", 5);
+        waitForPopup(titlePopUp, 1);
         return isTextInElementPresent(titlePopUp, "Login failed");
     }
-
-
-
-
-
 
 
 }

@@ -5,6 +5,7 @@ import ilcarro_zlv.manager.ApplManager;
 import ilcarro_zlv.pages.HomePage;
 import ilcarro_zlv.pages.LoginPage;
 
+import ilcarro_zlv.pages.SignUpPage;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -74,8 +75,10 @@ public class LoginZlvTests extends ApplManager {
     }
 
     @Test
-    void loginNegativeNotRegisteredUser(){
-
+    void loginNegativeTest_checkLinkNotRegisted(){
+        loginPage.clickOnLinkIfNotRegistered();
+        boolean isOpenRegistrationPage = new SignUpPage(getDriver()).isSignUpPage();
+        Assert.assertTrue(isOpenRegistrationPage);
     }
 
 }

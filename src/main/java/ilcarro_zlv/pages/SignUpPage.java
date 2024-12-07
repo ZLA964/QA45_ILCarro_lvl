@@ -36,6 +36,22 @@ public class SignUpPage extends BasePage {
     @FindBy(xpath = "//button[text()='Ok']")
     WebElement btnRegistrationOkey;
 
+    @FindBy(xpath = "//div[@class='login-registration-card']//h1")
+    WebElement titleOfPage;
+
+    @FindBy(xpath = "//span[@class='navigator']")
+    WebElement linkIfAlreadyRegistered;
+
+    public void clickOnLinkIfAlreadyRegistered() {
+        pause(1);
+        linkIfAlreadyRegistered.click();
+    }
+
+    public boolean isSignUpPage() {
+        return "title".equals(titleOfPage.getAttribute("class"))
+                && "Registration".equals(titleOfPage.getText());
+    }
+
     public void inputUserData(ArrayList<String> userData) {
         Iterator<WebElement> inputIterator = inputElements.iterator();
         Iterator<String> dataIterator = userData.iterator();
