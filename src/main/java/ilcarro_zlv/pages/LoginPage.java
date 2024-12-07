@@ -34,6 +34,25 @@ public class LoginPage extends BasePage {
     @FindBy(xpath = "//span[@class='navigator']")
     WebElement linkIfNotRegistered;
 
+    @FindBy(xpath = "//mat-dialog-container")
+    WebElement popUpBox;
+
+    @FindBy(xpath = "//h2[@class='message']")
+    WebElement massageOnPopUp;
+
+    @FindBy(xpath = "//mat-dialog-container//h1[@class='title']")
+    WebElement titlePopUp;                                                  //  h1   2 time!       'Login failed'
+
+    @FindBy(xpath = "//mat-dialog-container//button")
+    WebElement btnPopUp;
+
+    @FindBy(xpath = "//div[@class='error']")
+    WebElement errorMessage;
+
+    public boolean validateErrorMessage(String text){
+        return isTextInElementPresent(errorMessage, text);
+    }
+
     public void clickOnLinkIfNotRegistered() {
         //       pause(1);
         linkIfNotRegistered.click();
@@ -58,6 +77,11 @@ public class LoginPage extends BasePage {
         }
     }
 
+    public void clickOnDisabledBtnYalla(){
+        btnYalla.click();
+    }
+
+
     public boolean isBtnYallaDisable() {
         return !btnYalla.isEnabled();
     }
@@ -66,18 +90,6 @@ public class LoginPage extends BasePage {
         typeLoginForm(user);
         clickBtnYalla();
     }
-
-    @FindBy(xpath = "//mat-dialog-container")
-    WebElement popUpBox;
-
-    @FindBy(xpath = "//h2[@class='message']")
-    WebElement massageOnPopUp;
-
-    @FindBy(xpath = "//mat-dialog-container//h1[@class='title']")
-    WebElement titlePopUp;                                                  //  h1   2 time!       'Login failed'
-
-    @FindBy(xpath = "//mat-dialog-container//button")
-    WebElement btnPopUp;
 
     public void clickButtonPopUp() {
         btnPopUp.click();

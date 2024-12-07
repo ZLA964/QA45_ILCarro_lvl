@@ -15,6 +15,8 @@ import java.util.NoSuchElementException;
 public class LoginZlvTests extends ApplManager {
     LoginUser user;
     LoginPage loginPage;
+    LoginUser userEmailNegative;
+    LoginUser userPasswordNegative;
 
     @BeforeMethod
     void openLoginPage() {
@@ -26,7 +28,17 @@ public class LoginZlvTests extends ApplManager {
                 .email(email)
                 .password(password)
                 .build();
-
+        email = "user837mail.com";
+        userEmailNegative = LoginUser.builder()
+                .email(email)
+                .password(password)
+                .build();
+        email = "user837@mail.com";
+        password = "huiy";
+        userPasswordNegative = LoginUser.builder()
+                .email(email)
+                .password(password)
+                .build();
     }
 
     @Test
@@ -46,7 +58,7 @@ public class LoginZlvTests extends ApplManager {
 
     @Test
     void loginNegativeWrongEmailTest() {
-        user.setEmail("user037mail.com");
+        user.setEmail("user037@mail.com");
         System.out.println(user);
         loginPage.logIn(user);
         Assert.assertTrue(loginPage.isLoginIncorrect());
@@ -75,11 +87,37 @@ public class LoginZlvTests extends ApplManager {
     }
 
     @Test
-    void loginNegativeTest_checkLinkNotRegisted(){
+    void loginNegativeTest_checkLinkNotRegisted() {
         loginPage.clickOnLinkIfNotRegistered();
         boolean isOpenRegistrationPage = new SignUpPage(getDriver()).isSignUpPage();
         Assert.assertTrue(isOpenRegistrationPage);
     }
+
+    @Test
+    void loginNegativeTest_emailFromTestDataFile() {
+        boolean testPass;
+        try {
+            loginPage.logIn(userEmailNegative);
+            testPass = loginPage.isLoginIncorrect();
+        } catch (NoSuchElementException e) {
+            testPass = loginPage.validateErrorMessage("It'snot look like email");
+        }
+        Assert.assertTrue(testPass);
+    }
+
+    @Test
+    void loginNegativeTest_passwordFromTestDataFile() {
+        boolean testPass;
+        try {
+            loginPage.logIn(userPasswordNegative);
+            testPass = loginPage.isLoginIncorrect();
+        } catch (NoSuchElementException e) {
+            loginPage.clickOnDisabledBtnYalla();
+            testPass = loginPage.validateErrorMessage("Password is required");
+        }
+        Assert.assertTrue(testPass);
+    }
+
 
 }
 // {"email": "user837@mail.com", "password": "Pass-837-word!"}
