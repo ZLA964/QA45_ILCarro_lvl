@@ -81,7 +81,6 @@ public class LoginPage extends BasePage {
         btnYalla.click();
     }
 
-
     public boolean isBtnYallaDisable() {
         return !btnYalla.isEnabled();
     }

@@ -87,7 +87,7 @@ public class LoginZlvTests extends ApplManager {
     }
 
     @Test
-    void loginNegativeTest_checkLinkNotRegisted() {
+    void loginNegativeTest_checkLinkNotRegistedUser() {
         loginPage.clickOnLinkIfNotRegistered();
         boolean isOpenRegistrationPage = new SignUpPage(getDriver()).isSignUpPage();
         Assert.assertTrue(isOpenRegistrationPage);
