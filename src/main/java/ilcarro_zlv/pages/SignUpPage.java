@@ -43,7 +43,7 @@ public class SignUpPage extends BasePage {
     WebElement linkIfAlreadyRegistered;
 
     public void clickOnLinkIfAlreadyRegistered() {
-        pause(1);
+ //       pause(1);
         linkIfAlreadyRegistered.click();
     }
 
