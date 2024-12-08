@@ -19,3 +19,38 @@ ApplManager
 //        }
 //      the delay between tests is unnecessary
 
+build.gradle my with Gpt
+buildscript {
+    ext.kotlin_version = '1.8.22' // Обновите на актуальную версию
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+plugins {
+    id 'java'
+    id 'org.owasp.dependencycheck' version '11.1.0' // Убедитесь, что версия актуальна
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'org.testng:testng:7.8.0'
+    implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.22' // или более новая версия
+    implementation 'com.squareup.okio:okio:3.4.0' // или новее
+    implementation 'com.google.guava:guava:32.1.1-jre'
+}
+
+test {
+    useTestNG()
+}
