@@ -43,8 +43,20 @@ public class RegistrationPage extends BasePage {
     WebElement popUpMessage;
 
     public boolean isPopUpMessagePresent() {
-        pause(3);
+//        pause(3);
         return isTextInElementPresent(popUpMessage, "You are logged in success");
+    }
+
+    public boolean isPopUpMessagePresent(String text) {
+ //       pause(3);
+        return isTextInElementPresent(popUpMessage, text);
+    }
+
+    @FindBy(xpath = "//div[@class='error']")
+    WebElement errorMessage;
+
+    public boolean validationErrorMessage(String text){
+        return isTextInElementPresent(errorMessage, text);
     }
 
     public void typeRegistrationForm(UserDtoLombok user) {
@@ -63,6 +75,9 @@ public class RegistrationPage extends BasePage {
         actions.moveToElement(checkBox, -widthCheckBox / 3, -heightCheckBox / 4).click().perform();
     }
 
+    public boolean btnYallaDisable(){
+        return !btnYalla.isEnabled();
+    }
 
 }
 
