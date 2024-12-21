@@ -47,6 +47,13 @@ public class LetCarWorkPage extends BasePage {
     //   @FindBy(xpath = "//h2[@class='message']")
     //   WebElement popUpMessage;
 
+    @FindBy(xpath = "//div[contains(@class, 'error')]")
+    WebElement errorMessage;
+
+    public boolean isErrorMessagePresent(String text) {
+        return isTextInElementPresent(errorMessage, text);
+    }
+
     public boolean isPopUpMessagePresent(String text) {
         return isTextInElementPresent(popUpMessage, text);
     }
@@ -75,24 +82,42 @@ public class LetCarWorkPage extends BasePage {
     public void typeLetCarWorkForm_forNegativeTest(CarDto car) {
         if (!car.getCity().isBlank()) {
             inputLocation.sendKeys(car.getCity());
+            clickWait(locationSubmit, 5);
+        } else {
+            inputLocation.click();
         }
-//        clickWait(inputLocation, 5);
-        inputManufacture.sendKeys(car.getManufacture());
+        if (!car.getManufacture().isBlank()) {
+            inputManufacture.sendKeys(car.getManufacture());
+        } else {
+            inputManufacture.click();
+        }
         inputModel.sendKeys(car.getModel());
         inputYear.sendKeys(car.getYear());
         //==============
-        inputFuel.click();
-        clickWait(driver.findElement(By.xpath(car.getFuel())), 5);
-        inputFuel.click();
+        if(car.getFuel() != null) {
+            inputFuel.click();
+            clickWait(driver.findElement(By.xpath(car.getFuel())), 5);
+            inputFuel.click();
+        } else {
+            inputFuel.click();
+        }
 //        inputFuel.sendKeys(Keys.ESCAPE);
         inputSeats.sendKeys(car.getSeats() + "");
         inputClass.sendKeys(car.getCarClass());
         inputSerialNumber.sendKeys(car.getSerialNumber());
         inputPrice.sendKeys(Double.toString(car.getPricePerDay()));
         inputAbout.sendKeys(car.getAbout());
- //       clickWait(btnSubmit, 5);
+        //       clickWait(btnSubmit, 5);
     }
 
+    public boolean isBtnSubmitDisabled(int timeInSeconds) {
+        try {
+            return isWebElementDisabled(btnSubmit, timeInSeconds);
+        } catch (IllegalStateException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
 
 
 }
