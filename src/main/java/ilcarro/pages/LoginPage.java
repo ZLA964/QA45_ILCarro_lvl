@@ -25,11 +25,29 @@ public class LoginPage extends BasePage {
     @FindBy(xpath = "//button[@type='submit']")
     WebElement btnYalla;
 
-    @FindBy(xpath = "//h2[@class='message']")
-    WebElement popUpMessage;
+//    @FindBy(xpath = "//h2[@class='message']")
+//    WebElement popUpMessage;
 
     @FindBy(xpath = "//div[@class='error']")
     WebElement errorMessage;
+
+    @FindBy(id = "1")
+    WebElement btnLetCarWork;
+    @FindBy(xpath = "//button[@type='button']")
+    WebElement btnOk;
+
+    public void clickBtnOK() {
+        clickWait(btnOk, 10);
+    }
+
+
+    public void clickBtnLetCarWork() {
+     //   pause(1);
+        waitNewElementOnPage(btnLetCarWork,0);
+        btnLetCarWork.click();
+ //      clickWait(btnLetCarWork, 10);
+        clickWait(btnLetCarWork, 1);
+    }
 
     public void typeLoginForm(UserDtoLombok user) {
         inputEmail.sendKeys(user.getEmail());
