@@ -8,6 +8,7 @@ import ilcarro.pages.LoginPage;
 import ilcarro.pages.SearchPage;
 
 import ilcarro.utils.Fuel;
+import ilcarro.utils.RetryAnalyzer;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -39,7 +40,7 @@ public class AddNewCarTest extends ApplicationManager {
         }
     }
 
-    @Test
+    @Test(retryAnalyzer = RetryAnalyzer.class, invocationCount = 2)
     public void addNewCarPositiveTest() {
         CarDto car = CarDto.builder()
                 .serialNumber(new Random().nextInt(1000) + "-055")
@@ -79,7 +80,7 @@ public class AddNewCarTest extends ApplicationManager {
         Assert.assertTrue(  letCarWorkPage.isBtnSubmitDisabled(3));
     }
 
-    @Test
+    @Test(retryAnalyzer = RetryAnalyzer.class)
     public void addNewCarNegativeTest_noLocationV2() {
         CarDto car = CarDto.builder()
                 .serialNumber(new Random().nextInt(1000) + "-055")
@@ -163,4 +164,25 @@ public class AddNewCarTest extends ApplicationManager {
         softAssert.assertTrue(letCarWorkPage.isErrorMessagePresent(expectedMessage));
         softAssert.assertAll();
     }
+
+    @Test // (retryAnalyzer = RetryAnalyzer.class, invocationCount = 2)
+    public void addNewCarNegativeTest_withoutMake() {
+        CarDto car = CarDto.builder()
+                .serialNumber(new Random().nextInt(1000) + "-055")
+                .city("Haifa")
+                .manufacture("")
+                .model("CX-90")
+                .year("2022")
+                .fuel(Fuel.HYBRID.getLocator())
+                .seats(4)
+                .carClass("A")
+                .pricePerDay(123.99)
+                .about("About my car")
+                .build();
+        letCarWorkPage = new LetCarWorkPage(getDriver());
+        letCarWorkPage.typeLetCarWorkForm(car);
+        Assert.assertTrue(letCarWorkPage.isElementPresentDOM("//*[text()=' Make is required ']",5));
+
+    }
+
 }

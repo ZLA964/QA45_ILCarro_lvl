@@ -1,6 +1,7 @@
 package ilcarro.pages;
 
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -32,6 +33,22 @@ public class SearchPage extends BasePage{
     @FindBy(id = "dates")
     WebElement inputDates;
 
+    @FindBy(xpath = "//div[contains(@class, 'error')]")
+    WebElement errorMessage;
+
+    public boolean isErrorMessage(String text){
+        try {
+            waitNewElementOnPage(errorMessage,5);
+            return isTextInElementPresent(errorMessage,text);
+        } catch (TimeoutException e) {
+            System.out.println("Wait errorMessage threw exception");
+            return false;
+        }
+
+    }
+
+
+
 
 
     public void clickBtnLogIn(){
@@ -39,15 +56,25 @@ public class SearchPage extends BasePage{
     }
 
 
+//    public void fillSearchCarFormWOCalendar(String city, String startDate, String endDate) {
+//        inputCity.click();
+//        inputCity.sendKeys(city);
+//        Actions actions = new Actions(driver);
+//        actions.moveToElement(inputCity,0,27).pause(2000).click().perform();
+//        inputDates.click();
+//        inputDates.sendKeys(startDate+" - "+ endDate);
+//        inputDates.sendKeys(Keys.ENTER);
+//    }
+
     public void fillSearchCarFormWOCalendar(String city, String startDate, String endDate) {
         inputCity.click();
         inputCity.sendKeys(city);
         Actions actions = new Actions(driver);
-        actions.moveToElement(inputCity,0,27).pause(2000).click().perform();
+        actions.moveToElement(inputCity, 0, 27).pause(2000).click().perform();
+        //=======================================
         inputDates.click();
-        inputDates.sendKeys(startDate+" - "+ endDate);
+        inputDates.sendKeys(startDate + " - " + endDate);
         inputDates.sendKeys(Keys.ENTER);
     }
-
 
 }

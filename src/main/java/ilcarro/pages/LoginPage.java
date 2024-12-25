@@ -31,22 +31,28 @@ public class LoginPage extends BasePage {
     @FindBy(xpath = "//div[@class='error']")
     WebElement errorMessage;
 
-    @FindBy(id = "1")
+    @FindBy(id = "1")   //a[@ng-reflect-router-link='let-car-work']
     WebElement btnLetCarWork;
     @FindBy(xpath = "//button[@type='button']")
     WebElement btnOk;
 
+    @FindBy(xpath = "//div[@class='cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing']")
+    WebElement popUpWindows;
+
     public void clickBtnOK() {
-        clickWait(btnOk, 10);
-    }
+       clickWait(btnOk, 3);
+     }
 
 
     public void clickBtnLetCarWork() {
      //   pause(1);
-        waitNewElementOnPage(btnLetCarWork,0);
-        btnLetCarWork.click();
- //      clickWait(btnLetCarWork, 10);
-        clickWait(btnLetCarWork, 1);
+ //      waitNewElementOnPage(popUpWindows,3);
+ //      waitNewElementIsNotOnPage(popUpWindows,3);
+ //       btnLetCarWork.click();
+        isElementPresentDOM("//a[@ng-reflect-router-link='let-car-work']",3);
+        clickWait(btnLetCarWork, 3);
+        System.out.println("second click on btnLetCarWork ");
+        clickWait(btnLetCarWork, 3);
     }
 
     public void typeLoginForm(UserDtoLombok user) {
@@ -59,6 +65,7 @@ public class LoginPage extends BasePage {
     }
 
     public boolean isPopUpLoginMessagePresent(String text){
+        isElementPresentDOM("//h2[@class='message']",5);
         return isTextInElementPresent(popUpMessage, text);
     }
 

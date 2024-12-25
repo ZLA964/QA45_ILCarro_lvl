@@ -1,5 +1,6 @@
 package ilcarro.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -25,12 +26,29 @@ public class BasePage {
     @FindBy(xpath = "//h2[@class='message']")
     WebElement popUpMessage;
 
+    //div[@class="cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing"]
+
+
     public boolean isTextInElementPresent(WebElement element, String text) {
+        if (element == null) {
+            return false;
+        } else {
+            if (element.getText() == null) {
+                return false;
+            }
+        }
         return element.getText().contains(text);
     }
 
     public void clickWait(WebElement element, int time) {
-        new WebDriverWait(driver, time).until(ExpectedConditions.elementToBeClickable(element)).click();
+        try {
+            long startTime = System.currentTimeMillis();
+            new WebDriverWait(driver, time).until(ExpectedConditions.elementToBeClickable(element)).click();
+            long waitTime = System.currentTimeMillis() - startTime;
+            System.out.println("clickWait " + element.getText() + " waited -> " + +waitTime + " ms");
+        } catch (Exception e) {
+            System.out.println("ClilWait created exception ");
+        }
     }
 
     // wait new Element on Page
@@ -39,11 +57,29 @@ public class BasePage {
                 .until(ExpectedConditions.visibilityOf(element));
     }
 
+    public boolean waitElementIsNotOnPage(WebElement element, int timeoutInSeconds) {
+        return new WebDriverWait(driver, timeoutInSeconds)
+                .until(ExpectedConditions.invisibilityOf(element));
+    }
+
+    public boolean validateElemenIsNotPresent(String locator) {
+        try {
+            long startTime = System.currentTimeMillis();
+            new WebDriverWait(driver, 5).until(ExpectedConditions.invisibilityOfElementLocated
+                    (By.xpath("//div[@class='cdk-overlay-backdrop cdk-overlay-dark-backdrop cdk-overlay-backdrop-showing']")));
+            long waitTime = System.currentTimeMillis() - startTime;
+            System.out.println("5 seconds pass ? -> " + waitTime + " ms");
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public boolean validateUrl(String url, int time) {
         return new WebDriverWait(driver, time).until(ExpectedConditions.urlContains(url));
     }
 
-    public boolean isWebElementDisabled( WebElement element, int time) {
+    public boolean isWebElementDisabled(WebElement element, int time) {
         if (!element.isDisplayed()) {                         // Check that the element is visible
             throw new IllegalStateException("Element is not visible on the page.");
         }
@@ -57,6 +93,40 @@ public class BasePage {
             return true;                     // If the attribute does not disappear, return true
         }
         return false;                        // If the attribute disappears, the element is active
+    }
+
+    public boolean validateElementIsNotPresentV2(String locator) {
+        try {
+            long startTime = System.currentTimeMillis();
+
+            new WebDriverWait(driver, 5)
+                    .until(driver -> {
+                        boolean isInvisible = ExpectedConditions.invisibilityOfElementLocated(By.xpath(locator)).apply(driver);
+                        System.out.println("Checked invisibility: " + isInvisible);
+                        return isInvisible;
+                    });
+
+            long waitTime = System.currentTimeMillis() - startTime;
+            System.out.println("Time waited: " + waitTime + " ms");
+            return true;
+        } catch (Exception e) {
+            System.out.println("Element is still visible or another exception occurred.");
+            return false;
+        }
+    }
+
+    public boolean isElementPresentDOM(String locator, int time) {
+        try {
+            long startTime = System.currentTimeMillis();
+            new WebDriverWait(driver, time)
+                    .until(ExpectedConditions.presenceOfElementLocated(By.xpath(locator)));
+            long waitTime = System.currentTimeMillis() - startTime;
+            System.out.println("isElementPresentDOM " + locator + " waited -> " + waitTime + " ms");
+            return true;
+        } catch (Exception e) {
+            System.out.println("isElementPresentDOM created exception");
+            return false;
+        }
     }
 
 }
