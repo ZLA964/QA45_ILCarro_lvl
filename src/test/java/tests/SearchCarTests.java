@@ -42,6 +42,7 @@ public class SearchCarTests extends ApplicationManager {
 
     @Test
     public void searchCarPositiveTestWithCalendar(){
+        logger.info("test searchCarPositiveTestWithCalendar  with data --> " + "Haifa " + "dec/27/2024 " + "Aug/17/2025");
         searchPage = new SearchPage(getDriver());
         searchPage.fillSearchCarFormWithCalendar("Haifa", "dec/27/2024", "Aug/17/2025");
         Assert.assertTrue(new ResultsPage(getDriver()).isUrlResultsPresent());
