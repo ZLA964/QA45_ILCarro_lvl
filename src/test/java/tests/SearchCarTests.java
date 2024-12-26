@@ -6,27 +6,48 @@ import ilcarro.pages.SearchPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class SearchCarTests extends ApplicationManager {
     SearchPage searchPage;
 
     @Test
-    public void searhCarPositiveTest(){
+    public void searchCarPositiveTest(){
         searchPage = new SearchPage(getDriver());
         searchPage.fillSearchCarFormWOCalendar("Haifa", "12/25/2024", "12/27/2024");
        Assert.assertTrue(new ResultsPage(getDriver()).isUrlResultsPresent());
     }
 
     @Test
-    public void searhCarNegativeTest_wrongStartDate(){
+    public void searchCarNegativeTest_wrongStartDate(){
         searchPage = new SearchPage(getDriver());
         searchPage.fillSearchCarFormWOCalendar("Haifa", "12//2024", "12/27/2024");
         Assert.assertTrue(searchPage.isErrorMessage("Dates are required"));
     }
 
-    @Test
-    public void searhCarNegativeTest_wrongLocation(){
+    @Test   // //div[@class='ng-star-inserted']
+    public void searchCarNegativeTest_wrongLocation(){
+        int plusDay = 3;
+        int daysRent = 10;
+        LocalDateTime from  = LocalDateTime.now().plusDays(plusDay);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        String fromDate = from.format(formatter);
+        String toDate = from.plusDays(daysRent).format(formatter);
+        System.out.println(fromDate);
         searchPage = new SearchPage(getDriver());
-        searchPage.fillSearchCarFormWOCalendar("", "12/25/2024", "12/27/2024");
+        searchPage.fillSearchCarFormWOCalendar("", fromDate, toDate);
         Assert.assertTrue(searchPage.isErrorMessage("City is required"));
     }
+
+    @Test
+    public void searchCarPositiveTestWithCalendar(){
+        searchPage = new SearchPage(getDriver());
+        searchPage.fillSearchCarFormWithCalendar("Haifa", "dec/27/2024", "Aug/17/2025");
+        Assert.assertTrue(new ResultsPage(getDriver()).isUrlResultsPresent());
+    }
+
+
+
+
 }
