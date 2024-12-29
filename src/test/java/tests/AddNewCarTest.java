@@ -188,23 +188,21 @@ public class AddNewCarTest extends ApplicationManager {
 
     @Test(dataProvider = "carsDtoForAddtests", dataProviderClass =  DPCar.class) //, retryAnalyzer = RetryAnalyzer.class, invocationCount = 2)
     public void addNewCarPositiveTest_withDP(CarDto car) {
- /*       CarDto car = CarDto.builder()
-                .serialNumber(new Random().nextInt(1000) + "-055")
-                .city("Haifa")
-                .manufacture("Mazda")
-                .model("CX-90")
-                .year("2022")
-                .fuel(Fuel.HYBRID.getLocator())
-                .seats(4)
-                .carClass("A")
-                .pricePerDay(123.99)
-                .about("About my car")
-                .build(); */
         String expectedMessage = car.getManufacture() + " " + car.getModel() + " added successful";
         System.out.println(expectedMessage);
         letCarWorkPage = new LetCarWorkPage(getDriver());
         letCarWorkPage.typeLetCarWorkForm(car);
         Assert.assertTrue(letCarWorkPage.isPopUpMessagePresent(expectedMessage));
     }
+
+    @Test(dataProvider = "carsAddFileDP", dataProviderClass =  DPCar.class) //, retryAnalyzer = RetryAnalyzer.class, invocationCount = 2)
+    public void addNewCarPositiveTest_withFileDP(CarDto car) {
+        String expectedMessage = car.getManufacture() + " " + car.getModel() + " added successful";
+        logger.info("Is " + expectedMessage + " ?");
+        letCarWorkPage = new LetCarWorkPage(getDriver());
+        letCarWorkPage.typeLetCarWorkForm(car);
+        Assert.assertTrue(letCarWorkPage.isPopUpMessagePresent(expectedMessage));
+    }
+
 
 }

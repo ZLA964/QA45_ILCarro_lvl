@@ -52,7 +52,7 @@ public class DPCar {
                 String[] fields = line.split(",");
                 String fuelType = fields[4].toUpperCase();
                 carsList.add(CarDto.builder()
-                        .serialNumber(fields[0])
+                        .serialNumber(random.nextInt(1000) + "-file-01")
                         .manufacture(fields[1])
                         .model(fields[2])
                         .year(fields[3])
@@ -64,6 +64,7 @@ public class DPCar {
                         .city(fields[9])
                         .image(fields[10])
                         .build());
+                line = bufferedReader.readLine();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
