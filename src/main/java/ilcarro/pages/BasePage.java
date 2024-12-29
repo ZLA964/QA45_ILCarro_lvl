@@ -1,5 +1,6 @@
 package ilcarro.pages;
 
+import ilcarro.manager.ApplicationManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,9 +8,12 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BasePage {
     static WebDriver driver;
+    public Logger logger = LoggerFactory.getLogger(ApplicationManager.class);
 
     public static void setDriver(WebDriver wD) {
         driver = wD;
@@ -47,7 +51,7 @@ public class BasePage {
             long waitTime = System.currentTimeMillis() - startTime;
             System.out.println("clickWait " + element.getText() + " waited -> " + +waitTime + " ms");
         } catch (Exception e) {
-            System.out.println("ClilWait created exception ");
+            logger.info("ClilWait created exception ");
         }
     }
 

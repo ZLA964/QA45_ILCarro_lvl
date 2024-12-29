@@ -2,7 +2,6 @@ package ilcarro.pages;
 
 import ilcarro.dto.CarDto;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,7 +13,7 @@ public class LetCarWorkPage extends BasePage {
     public LetCarWorkPage(WebDriver webDrv) {
         setDriver(webDrv);
         PageFactory.initElements(
-                new AjaxElementLocatorFactory(driver, 10), this);
+                new AjaxElementLocatorFactory(driver, 3), this);
     }
 
     @FindBy(id = "pickUpPlace")
@@ -60,13 +59,13 @@ public class LetCarWorkPage extends BasePage {
 
     public void typeLetCarWorkForm(CarDto car) {
         inputLocation.sendKeys(car.getCity());
-        clickWait(locationSubmit, 5);
+        clickWait(locationSubmit, 1);
         inputManufacture.sendKeys(car.getManufacture());
         inputModel.sendKeys(car.getModel());
         inputYear.sendKeys(car.getYear());
         //==============
         inputFuel.click();
-        clickWait(driver.findElement(By.xpath(car.getFuel())), 5);
+        clickWait(driver.findElement(By.xpath(car.getFuel())), 3);
         inputFuel.click();
 //        inputFuel.sendKeys(Keys.ESCAPE);
         inputSeats.sendKeys(car.getSeats() + "");
