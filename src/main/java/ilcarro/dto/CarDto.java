@@ -1,14 +1,13 @@
 package ilcarro.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @ToString
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor(access = AccessLevel.PUBLIC) // Makes the constructor public
+@NoArgsConstructor // Adds a constructor with no arguments (default constructor)
 
 public class CarDto {
     String serialNumber;

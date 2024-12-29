@@ -15,6 +15,8 @@ build/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
+test_logs
+
 
 ### Eclipse ###
 .apt_generated
@@ -27,6 +29,7 @@ out/
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
+
 
 ### NetBeans ###
 /nbproject/private/
