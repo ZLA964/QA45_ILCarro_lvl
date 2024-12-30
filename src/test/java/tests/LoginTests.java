@@ -4,10 +4,13 @@ import ilcarro.dto.UserDtoLombok;
 import ilcarro.manager.ApplicationManager;
 import ilcarro.pages.LoginPage;
 import ilcarro.pages.SearchPage;
+import ilcarro.utils.TestNGListener;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+@Listeners(TestNGListener.class)
 public class LoginTests extends ApplicationManager {
 
     LoginPage loginPage;

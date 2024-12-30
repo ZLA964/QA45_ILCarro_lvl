@@ -5,10 +5,14 @@ import ilcarro.dto.UserDtoLombok;
 import ilcarro.manager.ApplicationManager;
 import ilcarro.pages.RegistrationPage;
 import ilcarro.pages.SearchPage;
+import ilcarro.utils.TestNGListener;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.util.Random;
+
+@Listeners(TestNGListener.class)
 
 public class RegistrationTests extends ApplicationManager {
     RegistrationPage registrationPage;

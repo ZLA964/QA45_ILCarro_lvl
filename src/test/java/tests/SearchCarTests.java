@@ -3,12 +3,15 @@ package tests;
 import ilcarro.manager.ApplicationManager;
 import ilcarro.pages.ResultsPage;
 import ilcarro.pages.SearchPage;
+import ilcarro.utils.TestNGListener;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+@Listeners(TestNGListener.class)
 public class SearchCarTests extends ApplicationManager {
     SearchPage searchPage;
 

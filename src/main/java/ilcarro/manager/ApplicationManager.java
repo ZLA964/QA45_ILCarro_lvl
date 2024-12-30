@@ -24,7 +24,7 @@ public class ApplicationManager {
 
     @BeforeMethod
     public void setUp(Method method) {
-        logger.info("Start testing --> " + method.getName());
+ //       logger.info("Start testing --> " + method.getName());
         System.out.println("Looger must printing before this string");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--lang=en");
@@ -37,9 +37,9 @@ public class ApplicationManager {
 
     @AfterMethod
     public void tearDown(Method method) {
-        logger.info("Stop testing --> " + method.getName());
+//        logger.info("Stop testing --> " + method.getName());
         if (driver != null) {
-//           driver.quit();
+           driver.quit();
         }
     }
 

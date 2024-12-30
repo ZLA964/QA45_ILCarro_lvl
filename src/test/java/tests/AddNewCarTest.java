@@ -1,5 +1,6 @@
 package tests;
 
+import ilcarro.data_provader.CarDP;
 import ilcarro.data_provader.DPCar;
 import ilcarro.dto.CarDto;
 import ilcarro.dto.UserDtoLombok;
@@ -10,13 +11,17 @@ import ilcarro.pages.SearchPage;
 
 import ilcarro.utils.Fuel;
 import ilcarro.utils.RetryAnalyzer;
+import ilcarro.utils.TestNGListener;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.lang.reflect.Method;
 import java.util.Random;
 
+@Listeners(TestNGListener.class)
 public class AddNewCarTest extends ApplicationManager {
     LoginPage loginPage;
     LetCarWorkPage letCarWorkPage;
@@ -204,5 +209,14 @@ public class AddNewCarTest extends ApplicationManager {
         Assert.assertTrue(letCarWorkPage.isPopUpMessagePresent(expectedMessage));
     }
 
+    @Test(dataProvider = "dataProviderCarFile", dataProviderClass = CarDP.class)
+    public void addNewCarPositiveTestDP(CarDto car, Method method) {
+        String expectedMessage = car.getManufacture() + " " + car.getModel() + " added successful";
+ //       System.out.println(expectedMessage);
+        logger.info(method.getName()+ " start with date --> " +car.toString());
+        letCarWorkPage = new LetCarWorkPage(getDriver());
+        letCarWorkPage.typeLetCarWorkForm(car);
+        Assert.assertTrue(letCarWorkPage.isPopUpMessagePresent(expectedMessage));
+    }
 
 }
