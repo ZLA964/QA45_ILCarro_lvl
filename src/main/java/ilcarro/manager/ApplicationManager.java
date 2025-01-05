@@ -15,6 +15,8 @@ import org.testng.annotations.BeforeMethod;
 import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
 
+import static ilcarro.utils.TakeScreenShot.takeScreenShort;
+
 
 public class ApplicationManager {
  //   private WebDriver driver;

@@ -35,7 +35,12 @@ public class WDListener extends AbstractWebDriverEventListener {
     @Override
     public void afterClickOn(WebElement element, WebDriver driver) {
         super.afterClickOn(element, driver);
-        logger.info("clic on element --> " + element.getTagName());
+        if (element != null) {
+            logger.info("--- click on element --> " + element.toString());
+        } else {
+            logger.info("--- ellement is null");
+        }
+      //  logger.info("clic on element --> " + element.getTagName());
     }
 
     @Override
@@ -51,6 +56,7 @@ public class WDListener extends AbstractWebDriverEventListener {
     @Override
     public <X> void afterGetScreenshotAs(OutputType<X> target, X screenshot) {
         super.afterGetScreenshotAs(target, screenshot);
+        logger.info("--- getScreenshotAs ---");
     }
 
     @Override

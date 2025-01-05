@@ -12,6 +12,7 @@ import ilcarro.pages.SearchPage;
 import ilcarro.utils.Fuel;
 import ilcarro.utils.RetryAnalyzer;
 import ilcarro.utils.TestNGListener;
+import org.openqa.selenium.TakesScreenshot;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
@@ -20,6 +21,8 @@ import org.testng.asserts.SoftAssert;
 
 import java.lang.reflect.Method;
 import java.util.Random;
+
+import static ilcarro.utils.TakeScreenShot.*;
 
 @Listeners(TestNGListener.class)
 public class AddNewCarTest extends ApplicationManager {
@@ -104,7 +107,7 @@ public class AddNewCarTest extends ApplicationManager {
         letCarWorkPage = new LetCarWorkPage(getDriver());
         letCarWorkPage.typeLetCarWorkForm_forNegativeTest(car);
         softAssert.assertTrue(  letCarWorkPage.isBtnSubmitDisabled(2));
-        softAssert.assertTrue(letCarWorkPage.isErrorMessagePresent(expectedMessage));
+        softAssert.assertTrue(  letCarWorkPage.isErrorMessagePresent(expectedMessage));
         softAssert.assertAll();
     }
 
@@ -216,6 +219,7 @@ public class AddNewCarTest extends ApplicationManager {
         logger.info(method.getName()+ " start with date --> " +car.toString());
         letCarWorkPage = new LetCarWorkPage(getDriver());
         letCarWorkPage.typeLetCarWorkForm(car);
+   //     takeScreenShort((TakesScreenshot) getDriver());
         Assert.assertTrue(letCarWorkPage.isPopUpMessagePresent(expectedMessage));
     }
 

@@ -2,6 +2,7 @@ package ilcarro.pages;
 
 import ilcarro.manager.ApplicationManager;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -10,6 +11,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static ilcarro.utils.TakeScreenShot.takeScreenShort;
 
 public class BasePage {
     static WebDriver driver;
@@ -41,6 +44,7 @@ public class BasePage {
                 return false;
             }
         }
+        takeScreenShort((TakesScreenshot) driver);
         return element.getText().contains(text);
     }
 
