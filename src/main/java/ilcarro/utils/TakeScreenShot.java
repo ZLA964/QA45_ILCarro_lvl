@@ -15,18 +15,20 @@ import java.time.format.DateTimeFormatter;
 
 public class TakeScreenShot {
 
-    public static void takeScreenShort(TakesScreenshot screenshot) {
+    public static String takeScreenShort(TakesScreenshot screenshot) {
         Path scrShFilePath = screenshot.getScreenshotAs(OutputType.FILE).toPath();
+        String scrnShotFileName = LocalDateTime.now().format(DateTimeFormatter
+                .ofPattern("yyyy-MM-dd_HH-mm-ss")) +
+                ".png";
         Path targetPath = Paths.get("test_logs/screenchorts/" +
-                LocalDateTime.now().format(DateTimeFormatter
-                        .ofPattern("yyyy-MM-dd_HH-mm-ss")) +
-                ".png");
+                scrnShotFileName);
 
         try {
             Files.copy(scrShFilePath, targetPath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        return scrnShotFileName;
     }
 
  /* .  private static String createFileName() {

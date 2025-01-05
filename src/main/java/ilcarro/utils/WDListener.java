@@ -56,7 +56,7 @@ public class WDListener extends AbstractWebDriverEventListener {
     @Override
     public <X> void afterGetScreenshotAs(OutputType<X> target, X screenshot) {
         super.afterGetScreenshotAs(target, screenshot);
-        logger.info("--- getScreenshotAs ---");
+        logger.info("--- was created getScreenshotAs ---");
     }
 
     @Override

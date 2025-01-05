@@ -13,25 +13,40 @@ public class TestNGListener implements ITestListener {
     @Override
     public void onTestStart(ITestResult result) {
         ITestListener.super.onTestStart(result);
-        logger.info("start test --> "+ result.getMethod());
+        //      logger.info("start test --> "+ result.getMethod());
+        logger.info("\n\t\t=== START === test -> "
+                + result.getName()
+                + "  in class: " + result.getTestClass().getName());
+
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
         ITestListener.super.onTestSuccess(result);
-        logger.info("success test --> "+ result.getMethod());
+        //       logger.info("success test --> "+ result.getMethod());
+        logger.info("\n\t\t=== SUCCESS === test -> "
+                + result.getName()
+                + "  in class: " + result.getTestClass().getName());
     }
 
     @Override
     public void onTestFailure(ITestResult result) {
         ITestListener.super.onTestFailure(result);
-        logger.info("fail test --> "+ result.getMethod());
+        //       logger.info("fail test --> "+ result.getMethod());
+        logger.info("\n\t\t=== FAIL === test -> "
+                + result.getName()
+                + "  in class:" + result.getTestClass().getName());
+
     }
 
     @Override
     public void onTestSkipped(ITestResult result) {
         ITestListener.super.onTestSkipped(result);
-        logger.info("skipped test --> "+ result.getMethod());
+//        logger.info("skipped test --> "+ result.getMethod());
+        logger.info("\n\t\t=== SKIPP === test -> "
+                + result.getName()
+                + "  in class:" + result.getTestClass().getName());
+
     }
 
 //    @Override
@@ -47,13 +62,17 @@ public class TestNGListener implements ITestListener {
     @Override
     public void onStart(ITestContext context) {
         ITestListener.super.onStart(context);
-        logger.info("start testing  on date--> "+ context.getStartDate()+ "============ start ============");
+        logger.info("start testing on date--> "
+                + "\n\t\t============ start ============"
+                + context.getStartDate());
 
     }
 
     @Override
     public void onFinish(ITestContext context) {
         ITestListener.super.onFinish(context);
-        logger.info("stop testing  on date--> "+ context.getStartDate()+ "============ stop ==============");
+        logger.info("stop testing on date--> "
+                + "\n\t\t============ stop =============="
+                + context.getEndDate());
     }
 }

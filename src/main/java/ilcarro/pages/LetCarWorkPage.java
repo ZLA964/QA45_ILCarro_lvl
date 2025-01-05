@@ -18,7 +18,7 @@ public class LetCarWorkPage extends BasePage {
 
     @FindBy(id = "pickUpPlace")
     WebElement inputLocation;
-    @FindBy(xpath = "//div[@class='pac-item']")
+    @FindBy(xpath = "//div[@class='pac-item']")    //div[@class='pac-item
     WebElement locationSubmit;
     @FindBy(id = "make")
     WebElement inputManufacture;
@@ -59,7 +59,8 @@ public class LetCarWorkPage extends BasePage {
 
     public void typeLetCarWorkForm(CarDto car) {
         inputLocation.sendKeys(car.getCity());
-        clickWait(locationSubmit, 1);
+ //       locationSubmit.click();
+        clickWait(locationSubmit, 1);  // not need clickWait , .click enough.
         inputManufacture.sendKeys(car.getManufacture());
         inputModel.sendKeys(car.getModel());
         inputYear.sendKeys(car.getYear());
@@ -81,6 +82,7 @@ public class LetCarWorkPage extends BasePage {
     public void typeLetCarWorkForm_forNegativeTest(CarDto car) {
         if (!car.getCity().isBlank()) {
             inputLocation.sendKeys(car.getCity());
+  //          locationSubmit.click();
             clickWait(locationSubmit, 5);
         } else {
             inputLocation.click();

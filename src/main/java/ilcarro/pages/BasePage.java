@@ -44,7 +44,9 @@ public class BasePage {
                 return false;
             }
         }
-        takeScreenShort((TakesScreenshot) driver);
+        logger.info("== checking Is '"+text+ "' present in\n\t\telement " +element.toString()+
+                "\n\t\tsee created screenshot " +
+                takeScreenShort((TakesScreenshot) driver));
         return element.getText().contains(text);
     }
 
@@ -53,9 +55,11 @@ public class BasePage {
             long startTime = System.currentTimeMillis();
             new WebDriverWait(driver, time).until(ExpectedConditions.elementToBeClickable(element)).click();
             long waitTime = System.currentTimeMillis() - startTime;
-            System.out.println("clickWait " + element.getText() + " waited -> " + +waitTime + " ms");
+            System.out.println("clickWait " + element.getText() + " waited -> " + waitTime + " ms");
         } catch (Exception e) {
-            logger.info("ClilWait created exception ");
+            logger.info("ClilWait created exception on " + element.toString() +
+                    "\n\t\t created screenshot " +
+                    takeScreenShort((TakesScreenshot) driver));
         }
     }
 
