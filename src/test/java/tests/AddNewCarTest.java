@@ -12,7 +12,7 @@ import ilcarro.pages.SearchPage;
 import ilcarro.utils.Fuel;
 import ilcarro.utils.RetryAnalyzer;
 import ilcarro.utils.TestNGListener;
-import org.openqa.selenium.TakesScreenshot;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
@@ -22,7 +22,7 @@ import org.testng.asserts.SoftAssert;
 import java.lang.reflect.Method;
 import java.util.Random;
 
-import static ilcarro.utils.TakeScreenShot.*;
+import static ilcarro.utils.PropertiesReader.*;
 
 @Listeners(TestNGListener.class)
 public class AddNewCarTest extends ApplicationManager {
@@ -33,8 +33,8 @@ public class AddNewCarTest extends ApplicationManager {
     @BeforeMethod
     public void login() {
         UserDtoLombok user = UserDtoLombok.builder()
-                .email("user837@mail.com")
-                .password("Pass-837-word!")
+                .email(getProperty("login.properties", "email"))        // "user837@mail.com")
+                .password(getProperty("login.properties", "password"))  // "Pass-837-word!")
                 .build();
         new SearchPage(getDriver()).clickBtnLogIn();
         loginPage = new LoginPage(getDriver());
@@ -216,7 +216,7 @@ public class AddNewCarTest extends ApplicationManager {
     public void addNewCarPositiveTestDP(CarDto car, Method method) {
         String expectedMessage = car.getManufacture() + " " + car.getModel() + " added successful";
  //       System.out.println(expectedMessage);
-        logger.info(method.getName()+ " start with date --> " +car.toString());
+        logger.info(method.getName()+ " start with date --> " +car);
         letCarWorkPage = new LetCarWorkPage(getDriver());
         letCarWorkPage.typeLetCarWorkForm(car);
    //     takeScreenShort((TakesScreenshot) getDriver());

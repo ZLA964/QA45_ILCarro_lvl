@@ -6,11 +6,15 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 
+import static ilcarro.utils.PropertiesReader.*;
+
+
 public class SearchPage extends BasePage {
 
     public SearchPage(WebDriver webDrv) {
         setDriver(webDrv);
-        driver.get("https://ilcarro.web.app/search");
+//        driver.get("https://ilcarro.web.app/search");
+        driver.get(getProperty("login.properties", "urlStart"));
         PageFactory.initElements(
                 new AjaxElementLocatorFactory(driver, 10), this);
     }

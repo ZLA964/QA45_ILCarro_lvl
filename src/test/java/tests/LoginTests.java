@@ -10,6 +10,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import static ilcarro.utils.PropertiesReader.getProperty;
+
 @Listeners(TestNGListener.class)
 public class LoginTests extends ApplicationManager {
 
@@ -24,8 +26,10 @@ public class LoginTests extends ApplicationManager {
     @Test
     public void loginPositiveTest(){
         UserDtoLombok user = UserDtoLombok.builder()
-                .email("user837@mail.com")
-                .password("Pass-837-word!")
+                .email(getProperty("login.properties", "email"))
+                .password(getProperty("login.properties", "password"))
+///                .email("user837@mail.com")
+///                .password("Pass-837-word!")
                 .build();
         loginPage.typeLoginForm(user);
         loginPage.clickBtnYalla();
