@@ -1,5 +1,6 @@
 package okhttp;
 
+import com.google.gson.reflect.TypeToken;
 import ilcarro.dto.UserDtoLombok;
 import ilcarro.utils.BaseApi;
 import okhttp3.Request;
@@ -11,10 +12,11 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.Random;
 
-public class RegistrationTestOkHttp implements BaseApi {
+public class RegistrationOkHttpTest implements BaseApi {
 
     SoftAssert softAssert = new SoftAssert();
 
@@ -42,10 +44,10 @@ public class RegistrationTestOkHttp implements BaseApi {
         }
 
         System.out.println(response.isSuccessful());
-        System.out.println(response.toString());
+        System.out.println(response);
         System.out.println(response.code());
         try {
-            System.out.println(response.body().string());
+            System.out.println(response.body() != null ? response.body().string() : "no response body!");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -58,7 +60,7 @@ public class RegistrationTestOkHttp implements BaseApi {
         UserDtoLombok user = UserDtoLombok.builder()
                 .firstName("Bob")
                 .lastName("Doe")
-                .username(i + "bob_doemail.com")
+                .username(i + "bob_doeemail.com")
                 .password("Pass123!")
                 .build();
         String userJson = GSON.toJson(user);
@@ -68,28 +70,31 @@ public class RegistrationTestOkHttp implements BaseApi {
                 .url(BASE_URL + REGISTRATION)
                 .post(requestBody)
                 .build();
-        Response response;
-        try {
-            response = OK_HTTP_CLIENT.newCall(request).execute();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-///        System.out.println(response.isSuccessful());
-///        System.out.println(response.toString());
-///        System.out.println(response.code());
-        try (ResponseBody responseBody = response.body()) {
-            String responseBodyJson = responseBody.string();
-            Map<String, Object> responceMap = GSON.fromJson(responseBodyJson, Map.class);
-///            System.out.println(responseBodyJson);
-///            System.out.println(responceMap.get("error"));
-///            System.out.println(responceMap.get("message"));
+//          Response response;
+        try (Response response = OK_HTTP_CLIENT.newCall(request).execute()) {
+///            System.out.println(response);
+///            System.out.println(response.isSuccessful());
             softAssert.assertFalse(response.isSuccessful());
+///            System.out.println(response.code());
             softAssert.assertEquals(response.code(), 400);
-            softAssert.assertEquals(responceMap.get("error"), "Bad Request");
-            softAssert.assertTrue(responceMap.get("message").toString().contains("well-formed email"));
+
+            ResponseBody responseBody = response.body();
+            if (responseBody != null ) {
+            String responseBodyJson = responseBody.string();
+///            System.out.println(responseBodyJson);
+            // Define the type Map<String, Object>
+            Type mapType = new TypeToken<Map<String, Object>>() {}.getType();
+            Map<String, Object> responseMap = GSON.fromJson(responseBodyJson, mapType);
+
+///            System.out.println(responseMap.get("error"));
+            softAssert.assertEquals(responseMap.get("error"), "Bad Request");
+///            System.out.println(responseMap.get("message"));
+            softAssert.assertTrue(responseMap.get("message").toString().contains("well-formed email"));
+}
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
         softAssert.assertAll();
     }
 }
