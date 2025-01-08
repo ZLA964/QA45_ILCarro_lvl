@@ -99,7 +99,6 @@ public class RegistrationOkHttpTest implements BaseApi {
         softAssert.assertAll();
     }
 
-
     @Test
     public void registrationNegativeTest_emptyLastName() {
         int i = new Random().nextInt(1000) + 1000;
@@ -122,6 +121,7 @@ public class RegistrationOkHttpTest implements BaseApi {
             ResponseBody responseBody = response.body();
             if (responseBody != null) {
                 String responseBodyJson = responseBody.string();
+///               System.out.println(responseBodyJson);
                 // Define the type Map<String, Object>
                 Type mapType = new TypeToken<Map<String, Object>>() {}.getType();
                 Map<String, Object> responseMap = GSON.fromJson(responseBodyJson, mapType);
@@ -132,6 +132,41 @@ public class RegistrationOkHttpTest implements BaseApi {
             throw new RuntimeException(e);
         }
 
+        softAssert.assertAll();
+    }
+
+    @Test
+    public void registrationNegativeTest_lastNameBlank() {
+        int i = new Random().nextInt(1000) + 1000;
+        UserDtoLombok user = UserDtoLombok.builder()
+                .firstName("Bob")
+                .lastName(" ")
+                .username(i + "bob_doe@email.com")
+                .password("Pass123!")
+                .build();
+        String userJson = GSON.toJson(user);
+        System.out.println("userJson ->" + userJson);
+        RequestBody requestBody = RequestBody.create(GSON.toJson(user), JSON);
+        Request request = new Request.Builder()
+                .url(BASE_URL + REGISTRATION)
+                .post(requestBody)
+                .build();
+        try (Response response = OK_HTTP_CLIENT.newCall(request).execute()) {
+            softAssert.assertFalse(response.isSuccessful());
+            softAssert.assertEquals(response.code(), 400);
+            ResponseBody responseBody = response.body();
+            if (responseBody != null) {
+                String responseBodyJson = responseBody.string();
+                // Define the type Map<String, Object>
+                Type mapType = new TypeToken<Map<String, Object>>() {
+                }.getType();
+                Map<String, Object> responseMap = GSON.fromJson(responseBodyJson, mapType);
+                softAssert.assertEquals(responseMap.get("error"), "Bad Request");
+                softAssert.assertTrue(responseMap.get("message").toString().contains("must not be blank"));
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         softAssert.assertAll();
     }
 

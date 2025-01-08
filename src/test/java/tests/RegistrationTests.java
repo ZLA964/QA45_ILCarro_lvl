@@ -90,7 +90,7 @@ public class RegistrationTests extends ApplicationManager {
     }
 
     @Test
-    void registrationNegativeTest_lnoChekBox(){
+    void registrationNegativeTest_noChekBox(){
         int i  = new Random().nextInt(1000)+1000;
         UserDtoLombok user = UserDtoLombok.builder()
                 .firstName("Bob")
