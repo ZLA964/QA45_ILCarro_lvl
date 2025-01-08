@@ -59,8 +59,8 @@ public class LetCarWorkPage extends BasePage {
 
     public void typeLetCarWorkForm(CarDto car) {
         inputLocation.sendKeys(car.getCity());
- //       locationSubmit.click();
-        clickWait(locationSubmit, 1);  // not need clickWait , .click enough.
+        locationSubmit.click();
+//        clickWait(locationSubmit, 1);  // not need clickWait , .click enough.
         inputManufacture.sendKeys(car.getManufacture());
         inputModel.sendKeys(car.getModel());
         inputYear.sendKeys(car.getYear());

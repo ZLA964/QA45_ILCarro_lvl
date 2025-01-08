@@ -33,7 +33,7 @@ public class AddNewCarTest extends ApplicationManager {
     @BeforeMethod
     public void login() {
         UserDtoLombok user = UserDtoLombok.builder()
-                .email(getProperty("login.properties", "email"))        // "user837@mail.com")
+                .username(getProperty("login.properties", "email"))        // "user837@mail.com")
                 .password(getProperty("login.properties", "password"))  // "Pass-837-word!")
                 .build();
         new SearchPage(getDriver()).clickBtnLogIn();
@@ -220,6 +220,17 @@ public class AddNewCarTest extends ApplicationManager {
         letCarWorkPage = new LetCarWorkPage(getDriver());
         letCarWorkPage.typeLetCarWorkForm(car);
    //     takeScreenShort((TakesScreenshot) getDriver());
+        Assert.assertTrue(letCarWorkPage.isPopUpMessagePresent(expectedMessage));
+    }
+
+    @Test(dataProvider = "dataProviderCarFileProperties", dataProviderClass = CarDP.class)
+    public void addNewCarPositiveTestDPProperties(CarDto car, Method method) {
+        String expectedMessage = car.getManufacture() + " " + car.getModel() + " added successful";
+        //       System.out.println(expectedMessage);
+        logger.info(method.getName()+ " start with date --> " +car);
+        letCarWorkPage = new LetCarWorkPage(getDriver());
+        letCarWorkPage.typeLetCarWorkForm(car);
+        //     takeScreenShort((TakesScreenshot) getDriver());
         Assert.assertTrue(letCarWorkPage.isPopUpMessagePresent(expectedMessage));
     }
 

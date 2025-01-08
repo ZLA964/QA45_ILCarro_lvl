@@ -11,10 +11,16 @@ import lombok.ToString;
 @Builder
 
 public class UserDtoLombok {
-    private String name;
+    private String firstName;
     private String lastName;
-    private String email;
+    private String username;
     private String password;
 
-
+/*
+username*	string
+password*	string
+pattern: ^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$#^&*!])(?=.*[a-zA-Z]).{8,}$
+firstName*	string
+lastName*	string
+}*/
 }

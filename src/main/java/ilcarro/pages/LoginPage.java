@@ -1,7 +1,6 @@
 package ilcarro.pages;
 
 import ilcarro.dto.UserDtoLombok;
-import ilcarro.pages.BasePage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -56,7 +55,7 @@ public class LoginPage extends BasePage {
     }
 
     public void typeLoginForm(UserDtoLombok user) {
-        inputEmail.sendKeys(user.getEmail());
+        inputEmail.sendKeys(user.getUsername());
         inputPassword.sendKeys(user.getPassword());
     }
 

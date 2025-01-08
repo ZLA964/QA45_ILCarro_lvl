@@ -21,9 +21,9 @@ public class RegistrationTests extends ApplicationManager {
     void registrationPositiveTest(){
         int i  = new Random().nextInt(1000)+1000;
         UserDtoLombok user = UserDtoLombok.builder()
-                .name("Bob")
+                .firstName("Bob")
                 .lastName("Doe")
-                .email(i+"bob_doe@mail.com")
+                .username(i+"bob_doe@mail.com")
                 .password("Pass123!")
                 .build();
         System.out.println(user);
@@ -39,9 +39,9 @@ public class RegistrationTests extends ApplicationManager {
     void registrationNegativeTest_wrongEmail(){
         int i  = new Random().nextInt(1000)+1000;
         UserDtoLombok user = UserDtoLombok.builder()
-                .name("Bob")
+                .firstName("Bob")
                 .lastName("Doe")
-                .email(i+"bob_doe_mail.com")
+                .username(i+"bob_doe_mail.com")
                 .password("Pass123!")
                 .build();
         System.out.println(user);
@@ -57,9 +57,9 @@ public class RegistrationTests extends ApplicationManager {
     void registrationNegativeTest_emptyLastName(){
         int i  = new Random().nextInt(1000)+1000;
         UserDtoLombok user = UserDtoLombok.builder()
-                .name("Bob")
+                .firstName("Bob")
                 .lastName("")
-                .email(i+"bob_doe@mail.com")
+                .username(i+"bob_doe@mail.com")
                 .password("Pass123!")
                 .build();
         System.out.println(user);
@@ -75,9 +75,9 @@ public class RegistrationTests extends ApplicationManager {
     void registrationNegativeTest_lastNameSpace(){
         int i  = new Random().nextInt(1000)+1000;
         UserDtoLombok user = UserDtoLombok.builder()
-                .name("Bob")
+                .firstName("Bob")
                 .lastName(" ")
-                .email(i+"bob_doe@mail.com")
+                .username(i+"bob_doe@mail.com")
                 .password("Pass123!")
                 .build();
         System.out.println(user);
@@ -93,9 +93,9 @@ public class RegistrationTests extends ApplicationManager {
     void registrationNegativeTest_lnoChekBox(){
         int i  = new Random().nextInt(1000)+1000;
         UserDtoLombok user = UserDtoLombok.builder()
-                .name("Bob")
+                .firstName("Bob")
                 .lastName("Doe")
-                .email(i+"bob_doe@mail.com")
+                .username(i+"bob_doe@mail.com")
                 .password("Pass123!")
                 .build();
         System.out.println(user);

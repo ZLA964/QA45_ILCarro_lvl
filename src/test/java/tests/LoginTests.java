@@ -26,7 +26,7 @@ public class LoginTests extends ApplicationManager {
     @Test
     public void loginPositiveTest(){
         UserDtoLombok user = UserDtoLombok.builder()
-                .email(getProperty("login.properties", "email"))
+                .username(getProperty("login.properties", "email"))
                 .password(getProperty("login.properties", "password"))
 ///                .email("user837@mail.com")
 ///                .password("Pass-837-word!")
@@ -39,7 +39,7 @@ public class LoginTests extends ApplicationManager {
     @Test
     public void loginNegativeTest_wrongEmail(){
         UserDtoLombok user = UserDtoLombok.builder()
-                .email("user837mail.com")
+                .username("user837mail.com")
                 .password("Pass-837-word!")
                 .build();
         loginPage.typeLoginForm(user);
@@ -50,7 +50,7 @@ public class LoginTests extends ApplicationManager {
     @Test
     public void loginNegativeTest_emptyPassword(){
         UserDtoLombok user = UserDtoLombok.builder()
-                .email("user837@mail.com")
+                .username("user837@mail.com")
                 .password("")
                 .build();
         System.out.println(user);
