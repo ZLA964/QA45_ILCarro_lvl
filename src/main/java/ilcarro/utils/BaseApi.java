@@ -19,5 +19,7 @@ public interface BaseApi {
     OkHttpClient OK_HTTP_CLIENT = new OkHttpClient();
 
     SoftAssert softAssert = new SoftAssert();
+    String ADD_NEW_CAR = "/v1/cars";
+    String AUTH = "Authorization";
 
 }

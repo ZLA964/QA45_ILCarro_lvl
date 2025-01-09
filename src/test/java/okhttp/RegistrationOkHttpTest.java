@@ -1,6 +1,8 @@
 package okhttp;
 
 import com.google.gson.reflect.TypeToken;
+import ilcarro.dto.ErrorMessageDtoString;
+import ilcarro.dto.TokenDto;
 import ilcarro.dto.UserDtoLombok;
 import ilcarro.utils.BaseApi;
 import okhttp3.Request;
@@ -48,7 +50,7 @@ public class RegistrationOkHttpTest implements BaseApi {
         System.out.println(response.code());
         try {
             System.out.println(response.body() != null ? response.body().string() : "no response body!");
-        response.close();
+            response.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -124,7 +126,8 @@ public class RegistrationOkHttpTest implements BaseApi {
                 String responseBodyJson = responseBody.string();
 ///               System.out.println(responseBodyJson);
                 // Define the type Map<String, Object>
-                Type mapType = new TypeToken<Map<String, Object>>() {}.getType();
+                Type mapType = new TypeToken<Map<String, Object>>() {
+                }.getType();
                 Map<String, Object> responseMap = GSON.fromJson(responseBodyJson, mapType);
                 softAssert.assertEquals(responseMap.get("error"), "Bad Request");
                 softAssert.assertTrue(responseMap.get("message").toString().contains("must not be blank"));
@@ -164,7 +167,7 @@ public class RegistrationOkHttpTest implements BaseApi {
                 softAssert.assertEquals(responseMap.get("error"), "Bad Request");
                 softAssert.assertTrue(responseMap.get("message").toString().contains("must not be blank"));
  */
-                softAssert.assertTrue(responseBodyJson.contains( "Bad Request"));
+                softAssert.assertTrue(responseBodyJson.contains("Bad Request"));
                 softAssert.assertTrue(responseBodyJson.contains("must not be blank"));
             }
         } catch (IOException e) {
@@ -192,7 +195,7 @@ public class RegistrationOkHttpTest implements BaseApi {
         Response response;
         try {
             response = OK_HTTP_CLIENT.newCall(request).execute();
-            if (response.isSuccessful()){
+            if (response.isSuccessful()) {
                 response = OK_HTTP_CLIENT.newCall(request).execute();
 ///                System.out.println(response.isSuccessful());
 ///                System.out.println(response);
@@ -211,5 +214,76 @@ public class RegistrationOkHttpTest implements BaseApi {
     }
 
 
+    @Test
+    public void registrationPositiveTestValidateToken() {
+        int i = new Random().nextInt(1000) + 1000;
+        UserDtoLombok user = UserDtoLombok.builder()
+                .firstName("Bob")
+                .lastName("Doe")
+                .username(i + "bob_doe@mail.com")
+                .password("Pass123!")
+                .build();
+        String userJson = GSON.toJson(user);
+        System.out.println("userJson ->" + userJson);
+        RequestBody requestBody = RequestBody.create(GSON.toJson(user), JSON);
+        Request request = new Request.Builder()
+                .url(BASE_URL + REGISTRATION)
+                .post(requestBody)
+                .build();
+//        Response response;
+        try (Response response = OK_HTTP_CLIENT.newCall(request).execute()) {
+            if (response.isSuccessful()) {
+                TokenDto tokenDto = GSON.fromJson(response.body().string(), TokenDto.class);
+                System.out.println(tokenDto);
+                Assert.assertFalse(tokenDto.getAccessToken().isBlank());
+            } else {
+                ErrorMessageDtoString errorMessageDtoString =
+                        GSON.fromJson(response.body().string(), ErrorMessageDtoString.class);
+                System.out.println(errorMessageDtoString);
+                Assert.fail("Status code response --> " + response.code());
+            }
+        } catch (IOException e) {
+            Assert.fail("Created exception");
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void registrationNegativeTest__wrongPassword() {
+        int i = new Random().nextInt(1000) + 1000;
+        UserDtoLombok user = UserDtoLombok.builder()
+                .firstName("Bob")
+                .lastName("Doe")
+                .username(i + "bob_doe@mail.com")
+                .password("Pass123qw")
+                .build();
+        String userJson = GSON.toJson(user);
+        System.out.println("userJson ->" + userJson);
+        RequestBody requestBody = RequestBody.create(GSON.toJson(user), JSON);
+        Request request = new Request.Builder()
+                .url(BASE_URL + REGISTRATION)
+                .post(requestBody)
+                .build();
+        try (Response response = OK_HTTP_CLIENT.newCall(request).execute()) {
+            if (!response.isSuccessful()) {
+                ErrorMessageDtoString errorMessageDto = GSON.fromJson(response.body().string(), ErrorMessageDtoString.class);
+                System.out.println(errorMessageDto);
+                softAssert.assertEquals(response.code(), 400);
+                softAssert.assertTrue(errorMessageDto.getError().equals("Bad Request"));
+                softAssert.assertTrue(errorMessageDto.getMessage().toString().contains("At least 8 characters"));
+                softAssert.assertAll();
+            } else {
+                ErrorMessageDtoString errorMessageDtoString =
+                        GSON.fromJson(response.body().string(), ErrorMessageDtoString.class);
+                System.out.println(errorMessageDtoString);
+                Assert.fail("Status code response --> " + response.code());
+            }
+
+        } catch (IOException e) {
+            Assert.fail("Created exception");
+            e.printStackTrace();
+        }
+
+    }
 }
 

@@ -3,10 +3,8 @@ package okhttp;
 
 import ilcarro.dto.UserDtoLombok;
 import ilcarro.utils.BaseApi;
-import ilcarro.utils.TestNGListener;
 import okhttp3.*;
 
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.io.*;
@@ -19,7 +17,6 @@ import static ilcarro.utils.PropertiesReader.getProperty;
 
 //@Listeners(TestNGListener.class)
 public class LoginOkHttpTest implements BaseApi {
-
 
 
     @Test
