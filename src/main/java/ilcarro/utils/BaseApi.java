@@ -23,5 +23,6 @@ public interface BaseApi {
     String AUTH = "Authorization";
 
     String GET_USER_CARS = "/v1/cars/my";
+    String DELETE_CAR = "/v1/cars/";
 
 }
