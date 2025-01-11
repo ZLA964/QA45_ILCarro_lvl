@@ -30,17 +30,20 @@ public class AddNewCarOkHttpTest implements BaseApi {
                 .post(requestLoginBody)
                 .build();
         try (Response response = OK_HTTP_CLIENT.newCall(request).execute()) {
-            if (response.isSuccessful()) {
+            if (response.isSuccessful() && response.body() != null) {
                 tokenDto = GSON.fromJson(response.body().string(), TokenDto.class);
 ///                System.out.println(tokenDto.getAccessToken());
             } else {
-                ErrorMessageDtoString errorMessageDtoString =
-                        GSON.fromJson(response.body().string(), ErrorMessageDtoString.class);
-                System.out.println(errorMessageDtoString);
+                if (response.body() != null) {
+                    ErrorMessageDtoString errorMessageDtoString =
+                            GSON.fromJson(response.body().string(), ErrorMessageDtoString.class);
+                    System.out.println(errorMessageDtoString);
+                }
                 Assert.fail("Status code response on Login --> " + response.code());
             }
         } catch (IOException e) {
             System.out.println(e.getMessage());
+            //noinspection CallToPrintStackTrace
             e.printStackTrace();
             Assert.fail("Login created exception");
             throw new RuntimeException(e);
@@ -56,7 +59,7 @@ public class AddNewCarOkHttpTest implements BaseApi {
                 .model("Focus")
                 .city("Haifa")
                 .fuel("Electric")
-                .about("aabout my car")
+                .about("about my car")
                 .image("1.6l")
                 .year("2020")
                 .seats(5)
@@ -71,7 +74,7 @@ public class AddNewCarOkHttpTest implements BaseApi {
                 .build();
         try (Response response = OK_HTTP_CLIENT.newCall(request).execute()) {
             System.out.println(response.isSuccessful() + " code " + response.code());
-            if (response.isSuccessful()) {
+            if (response.isSuccessful() && response.body() != null) {
                 softAssert.assertEquals(response.code(), 200);
                 String responseBodyAsString = response.body().string();
                 System.out.println(responseBodyAsString);
@@ -93,14 +96,14 @@ public class AddNewCarOkHttpTest implements BaseApi {
                 .serialNumber("number-" + i)
                 .manufacture("Ford")
                 .model("Focus")
-                         .city("")
+                .city("")
                 .fuel("Electric")
-                .about("aabout my car")
+                .about("about my car")
                 .image("1.6l")
                 .year("2020")
                 .seats(5)
                 .carClass("B")
-                .pricePerDay(345.25 )
+                .pricePerDay(345.25)
                 .build();
         RequestBody requestBody = RequestBody.create(GSON.toJson(carDtoApi), JSON);
         Request request = new Request.Builder()
@@ -110,7 +113,7 @@ public class AddNewCarOkHttpTest implements BaseApi {
                 .build();
         try (Response response = OK_HTTP_CLIENT.newCall(request).execute()) {
             System.out.println(response.isSuccessful() + " code " + response.code());
-            if (!response.isSuccessful()) {
+            if (!response.isSuccessful() && response.body() != null) {
                 softAssert.assertEquals(response.code(), 400);
                 String responseBodyAsString = response.body().string();
 ///                System.out.println(responseBodyAsString);
@@ -123,9 +126,7 @@ public class AddNewCarOkHttpTest implements BaseApi {
 ///                System.out.println(wrongCarDtoApi);
                 softAssert.assertTrue(hasMustNotBeSubstring(wrongCarDtoApi));
                 softAssert.assertAll();
-            }else {
-                String responseBodyAsString = response.body().string();
-                System.out.println(responseBodyAsString);
+            } else {
                 Assert.fail("response status code --> " + response.code());
             }
         } catch (IOException e) {
@@ -143,6 +144,7 @@ public class AddNewCarOkHttpTest implements BaseApi {
                     return true;
                 }
             } catch (IllegalAccessException e) {
+                //noinspection CallToPrintStackTrace
                 e.printStackTrace();
             }
         }
@@ -158,12 +160,12 @@ public class AddNewCarOkHttpTest implements BaseApi {
                 .model("Ford")
                 .city("Haifa")
                 .fuel("Electric")
-                .about("aabout my car")
+                .about("about my car")
                 .image("1.6l")
                 .year("2020")
                 .seats(-1)
                 .carClass("B")
-                .pricePerDay(345.25 )
+                .pricePerDay(345.25)
                 .build();
         RequestBody requestBody = RequestBody.create(GSON.toJson(carDtoApi), JSON);
         Request request = new Request.Builder()
@@ -173,7 +175,7 @@ public class AddNewCarOkHttpTest implements BaseApi {
                 .build();
         try (Response response = OK_HTTP_CLIENT.newCall(request).execute()) {
             System.out.println("Is response successful -> " + response.isSuccessful() + " code " + response.code());
-            if (!response.isSuccessful()) {
+            if (!response.isSuccessful() && response.body() != null) {
                 softAssert.assertEquals(response.code(), 400);
                 String responseBodyAsString = response.body().string();
                 ErrorMessageDtoString errorMessageDtoString =
@@ -182,9 +184,7 @@ public class AddNewCarOkHttpTest implements BaseApi {
                         GSON.fromJson(errorMessageDtoString.getMessage(), CarDtoApi.class);
                 softAssert.assertTrue(hasMustNotBeSubstring(wrongCarDtoApi));
                 softAssert.assertAll();
-            }else {
-                String responseBodyAsString = response.body().string();
-                System.out.println("responseBodyAsString -> " + responseBodyAsString);
+            } else {
                 Assert.fail("response status code --> " + response.code());
             }
         } catch (IOException e) {
@@ -201,12 +201,12 @@ public class AddNewCarOkHttpTest implements BaseApi {
                 .model("Focus")
                 .city("Haifa")
                 .fuel("")
-                .about("aabout my car")
+                .about("about my car")
                 .image("1.6l")
                 .year("2020")
                 .seats(5)
                 .carClass("B")
-                .pricePerDay(345.25 )
+                .pricePerDay(345.25)
                 .build();
         RequestBody requestBody = RequestBody.create(GSON.toJson(carDtoApi), JSON);
         Request request = new Request.Builder()
@@ -216,7 +216,7 @@ public class AddNewCarOkHttpTest implements BaseApi {
                 .build();
         try (Response response = OK_HTTP_CLIENT.newCall(request).execute()) {
             System.out.println(response.isSuccessful() + " code " + response.code());
-            if (!response.isSuccessful()) {
+            if (!response.isSuccessful() && response.body() != null) {
                 softAssert.assertEquals(response.code(), 400);
                 String responseBodyAsString = response.body().string();
                 ErrorMessageDtoString errorMessageDtoString =
@@ -225,9 +225,7 @@ public class AddNewCarOkHttpTest implements BaseApi {
                         GSON.fromJson(errorMessageDtoString.getMessage(), CarDtoApi.class);
                 softAssert.assertTrue(hasMustNotBeSubstring(wrongCarDtoApi));
                 softAssert.assertAll();
-            }else {
-                String responseBodyAsString = response.body().string();
-                System.out.println(responseBodyAsString);
+            } else {
                 Assert.fail("response status code --> " + response.code());
             }
         } catch (IOException e) {
@@ -244,15 +242,15 @@ public class AddNewCarOkHttpTest implements BaseApi {
                 .model("Focus")
                 .city("")
                 .fuel("Electric")
-                .about("aabout my car")
+                .about("about my car")
                 .image("1.6l")
                 .year("2020")
                 .seats(5)
                 .carClass("B")
-                .pricePerDay(345.25 )
+                .pricePerDay(345.25)
                 .build();
         RequestBody requestBody = RequestBody.create(GSON.toJson(carDtoApi), JSON);
-        tokenDto.setAccessToken(tokenDto.getAccessToken()+".");
+        tokenDto.setAccessToken(tokenDto.getAccessToken() + ".");
         Request request = new Request.Builder()
                 .url(BASE_URL + ADD_NEW_CAR)
                 .addHeader(AUTH, tokenDto.getAccessToken())
@@ -260,7 +258,7 @@ public class AddNewCarOkHttpTest implements BaseApi {
                 .build();
         try (Response response = OK_HTTP_CLIENT.newCall(request).execute()) {
             System.out.println(response.isSuccessful() + " code " + response.code());
-            if (!response.isSuccessful()) {
+            if (!response.isSuccessful() && response.body() != null) {
                 softAssert.assertEquals(response.code(), 401);
                 String responseBodyAsString = response.body().string();
                 System.out.println(responseBodyAsString);
@@ -268,11 +266,9 @@ public class AddNewCarOkHttpTest implements BaseApi {
                         GSON.fromJson(responseBodyAsString, ErrorMessageDtoString.class);
                 System.out.println(errorMessageDtoString);
                 System.out.println(errorMessageDtoString.getError());
-                softAssert.assertEquals(errorMessageDtoString.getError(),"Unauthorized" );
+                softAssert.assertEquals(errorMessageDtoString.getError(), "Unauthorized");
                 softAssert.assertAll();
-            }else {
-                String responseBodyAsString = response.body().string();
-                System.out.println(responseBodyAsString);
+            } else {
                 Assert.fail("response status code --> " + response.code());
             }
         } catch (IOException e) {
