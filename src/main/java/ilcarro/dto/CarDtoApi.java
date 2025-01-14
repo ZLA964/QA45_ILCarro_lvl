@@ -3,7 +3,7 @@ package ilcarro.dto;
 import lombok.*;
 
 import java.util.List;
-import java.util.Objects;
+
 
 @Getter
 @Setter
@@ -30,6 +30,7 @@ public class CarDtoApi {
     private String owner; //": "string",
     private List<BookedDto> bookedPeriods;
 
+/*
 //    @Override
 //    public boolean equals(Object o) {
 //        if (this == o) return true;
@@ -47,6 +48,6 @@ public class CarDtoApi {
 //                && Objects.equals(city, carDto.city)
 //               ;
 //    }
-
+*/
 
 }

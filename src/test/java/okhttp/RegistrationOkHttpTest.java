@@ -22,9 +22,9 @@ public class RegistrationOkHttpTest implements BaseApi {
 
 //    SoftAssert softAssert = new SoftAssert();
 
-    @Test
+    @Test(invocationCount = 1)
     public void registrationPositiveTest() {
-        int i = new Random().nextInt(1000) + 1000;
+        int i = new Random().nextInt(1000) + 2000;
         UserDtoLombok user = UserDtoLombok.builder()
                 .firstName("Bob")
                 .lastName("Doe")
@@ -44,10 +44,9 @@ public class RegistrationOkHttpTest implements BaseApi {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        System.out.println(response.isSuccessful());
-        System.out.println(response);
-        System.out.println(response.code());
+///        System.out.println(response.isSuccessful());
+///        System.out.println(response);
+///        System.out.println(response.code());
         try {
             System.out.println(response.body() != null ? response.body().string() : "no response body!");
             response.close();
@@ -214,9 +213,9 @@ public class RegistrationOkHttpTest implements BaseApi {
     }
 
 
-    @Test
+    @Test // (invocationCount = 2)
     public void registrationPositiveTestValidateToken() {
-        int i = new Random().nextInt(1000) + 1000;
+        int i = new Random().nextInt(1000) + 2000;
         UserDtoLombok user = UserDtoLombok.builder()
                 .firstName("Bob")
                 .lastName("Doe")
@@ -239,17 +238,17 @@ public class RegistrationOkHttpTest implements BaseApi {
             } else {
                 ErrorMessageDtoString errorMessageDtoString =
                         GSON.fromJson(response.body().string(), ErrorMessageDtoString.class);
-                System.out.println(errorMessageDtoString);
+///                System.out.println(errorMessageDtoString);
                 Assert.fail("Status code response --> " + response.code());
             }
         } catch (IOException e) {
-            Assert.fail("Created exception");
             e.printStackTrace();
+            Assert.fail("Created exception");
         }
     }
 
     @Test
-    public void registrationNegativeTest__wrongPassword() {
+    public void registrationNegative_wrongPassword_Test() {
         int i = new Random().nextInt(1000) + 1000;
         UserDtoLombok user = UserDtoLombok.builder()
                 .firstName("Bob")

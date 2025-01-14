@@ -44,7 +44,7 @@ public class BasePage {
                 return false;
             }
         }
-        logger.info("== checking Is '"+text+ "' present in\n\t\telement " +element.toString()+
+        logger.info("== checking Is '"+text+ "' present in\n\t\telement " +element+
                 "\n\t\tsee created screenshot " +
                 takeScreenShort((TakesScreenshot) driver));
         return element.getText().contains(text);

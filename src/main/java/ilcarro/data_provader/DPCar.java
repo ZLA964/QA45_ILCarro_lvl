@@ -36,7 +36,7 @@ public class DPCar {
                             .build();
                 })
                 .limit(countCar)
-                .collect(Collectors.toList());
+                .toList();
         return carDtos.toArray(new CarDto[0]);
     }
 

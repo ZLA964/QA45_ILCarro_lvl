@@ -16,11 +16,12 @@ import java.util.Random;
 import static ilcarro.utils.PropertiesReader.getProperty;
 
 public class AddNewCarOkHttpTest implements BaseApi {
-    TokenDto tokenDto;
+    private TokenDto tokenDto;
+    UserDtoLombok user;
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void login() {
-        UserDtoLombok user = UserDtoLombok.builder()
+        user = UserDtoLombok.builder()
                 .username(getProperty("login.properties", "email"))        // "user837@mail.com")
                 .password(getProperty("login.properties", "password"))     // "Pass-837-word!")
                 .build();
@@ -46,7 +47,7 @@ public class AddNewCarOkHttpTest implements BaseApi {
             //noinspection CallToPrintStackTrace
             e.printStackTrace();
             Assert.fail("Login created exception");
-            throw new RuntimeException(e);
+
         }
     }
 
@@ -67,6 +68,7 @@ public class AddNewCarOkHttpTest implements BaseApi {
                 .pricePerDay(345.5)
                 .build();
         RequestBody requestBody = RequestBody.create(GSON.toJson(carDtoApi), JSON);
+//        System.out.println(tokenDto.getAccessToken());
         Request request = new Request.Builder()
                 .url(BASE_URL + ADD_NEW_CAR)
                 .addHeader(AUTH, tokenDto.getAccessToken())
@@ -77,11 +79,16 @@ public class AddNewCarOkHttpTest implements BaseApi {
             if (response.isSuccessful() && response.body() != null) {
                 softAssert.assertEquals(response.code(), 200);
                 String responseBodyAsString = response.body().string();
-                System.out.println(responseBodyAsString);
+ ///               System.out.println(responseBodyAsString);
                 ResponseMessageDto responseMessageDto = GSON.fromJson(responseBodyAsString, ResponseMessageDto.class);
                 softAssert.assertTrue(responseMessageDto.getMessage().equals("Car added successfully"));
                 softAssert.assertAll();
             } else {
+                if (response.body() != null) {
+                    ErrorMessageDtoString errorMessageDtoString =
+                            GSON.fromJson(response.body().string(), ErrorMessageDtoString.class);
+                    System.out.println(errorMessageDtoString);
+                }
                 Assert.fail("response status code --> " + response.code());
             }
         } catch (IOException e) {
@@ -156,7 +163,7 @@ public class AddNewCarOkHttpTest implements BaseApi {
         int i = new Random().nextInt(10000);
         CarDtoApi carDtoApi = CarDtoApi.builder()
                 .serialNumber("number-" + i)
-                .manufacture("Ford")
+                .manufacture("") //Ford
                 .model("Ford")
                 .city("Haifa")
                 .fuel("Electric")
@@ -209,13 +216,15 @@ public class AddNewCarOkHttpTest implements BaseApi {
                 .pricePerDay(345.25)
                 .build();
         RequestBody requestBody = RequestBody.create(GSON.toJson(carDtoApi), JSON);
+
         Request request = new Request.Builder()
                 .url(BASE_URL + ADD_NEW_CAR)
                 .addHeader(AUTH, tokenDto.getAccessToken())
                 .post(requestBody)
                 .build();
         try (Response response = OK_HTTP_CLIENT.newCall(request).execute()) {
-            System.out.println(response.isSuccessful() + " code " + response.code());
+            System.out.println("addNewCarNegativeTest_blankFuel-> "  +
+                    response.isSuccessful() + " code " + response.code());
             if (!response.isSuccessful() && response.body() != null) {
                 softAssert.assertEquals(response.code(), 400);
                 String responseBodyAsString = response.body().string();
@@ -250,10 +259,12 @@ public class AddNewCarOkHttpTest implements BaseApi {
                 .pricePerDay(345.25)
                 .build();
         RequestBody requestBody = RequestBody.create(GSON.toJson(carDtoApi), JSON);
-        tokenDto.setAccessToken(tokenDto.getAccessToken() + ".");
+        TokenDto tokenDto401 = TokenDto.builder()
+                .accessToken(tokenDto.getAccessToken() + ".")
+                .build();
         Request request = new Request.Builder()
                 .url(BASE_URL + ADD_NEW_CAR)
-                .addHeader(AUTH, tokenDto.getAccessToken())
+                .addHeader(AUTH, tokenDto401.getAccessToken())
                 .post(requestBody)
                 .build();
         try (Response response = OK_HTTP_CLIENT.newCall(request).execute()) {
